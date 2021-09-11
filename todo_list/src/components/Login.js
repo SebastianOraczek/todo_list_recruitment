@@ -1,57 +1,47 @@
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { withStyles } from '@material-ui/core/styles';
 
 import useInputState from "../hooks/useInputState";
-import styles from "../styles/LoginStyles";
+import useToggleState from "../hooks/useToggleState";
 
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
 import Grid from "@material-ui/core/Grid";
+import { withStyles } from '@material-ui/core/styles';
+import styles from "../styles/LoginStyles";
 
 function Login(props) {
     const { history, classes } = props;
-
     const [identifier, setIdentifier] = useInputState("");
     const [password, setPassword] = useInputState("");
-    const [alert, setAlert] = useState(false);
+    const [isAlert, toggle] = useToggleState(false);
 
     const handleSubmit = async (evt) => {
         evt.preventDefault();
         const user = { identifier, password };
 
-        try {
-            const url = "https://recruitment.ultimate.systems/auth/local";
-            const res = await fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(user)
+        const url = "https://recruitment.ultimate.systems/auth/local";
+        const res = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(user)
 
-            });
-            console.log(res);
+        });
+        console.log(res);
 
-            if (res.status === 200) {
-                window.localStorage.setItem("user", JSON.stringify(user));
-                history.push("/lists");
-            } else {
-                setAlert(true);
-            };
-
-        } catch (err) {
-            console.log(err);
+        if (res.status === 200) {
+            window.localStorage.setItem("user", JSON.stringify(user));
+            history.push("/lists");
+        } else {
+            toggle(true);
         };
-    };
-
-    const toggleAlert = () => {
-        setAlert(false);
     };
 
     return (
         <div>
-            {alert && (
+            {isAlert && (
                 <Alert severity="error"
-                    onClose={toggleAlert} > Incorrect Login or password
+                    onClose={toggle} > Incorrect Login or password
                 </Alert >
             )}
             <Grid container justifyContent="center" alignItems="center">

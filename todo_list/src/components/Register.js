@@ -1,8 +1,5 @@
-import { useState } from "react";
-import { withStyles } from '@material-ui/core/styles';
-
 import useInputState from "../hooks/useInputState";
-import styles from "../styles/RegisterStyles";
+import useToggleState from '../hooks/useToggleState';
 
 import Paper from '@material-ui/core/Paper';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -10,6 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
 import Grid from "@material-ui/core/Grid";
+import { withStyles } from '@material-ui/core/styles';
+import styles from "../styles/RegisterStyles";
 
 function Register(props) {
     const { history, classes } = props;
@@ -17,7 +16,7 @@ function Register(props) {
     const [email, changeEmail] = useInputState("");
     const [password, changePassword] = useInputState("");
     const [repPassword, changeRepPassword] = useInputState("");
-    const [alert, setAlert] = useState(false)
+    const [isAlert, toggle] = useToggleState(false);
 
     const handleSubmit = async (evt) => {
         evt.preventDefault();
@@ -34,18 +33,13 @@ function Register(props) {
             });
             console.log(res);
 
-            if (res.status === 200) {
-                history.push("/login");
-            } else {
-                setAlert(true);
-            }
-        } else {
-            setAlert(true);
-        };
-    };
+            res.status === 200
+                ? history.push("/login")
+                : toggle(true);
 
-    const toggleAlert = () => {
-        setAlert(false);
+        } else {
+            toggle(true);
+        };
     };
 
     const backToLogin = () => {
@@ -54,9 +48,9 @@ function Register(props) {
 
     return (
         <div>
-            {alert && (
+            {isAlert && (
                 <Alert severity="error"
-                    onClose={toggleAlert}>Something went wrong!
+                    onClose={toggle}>Something went wrong
                 </Alert>
             )}
             <Grid container justifyContent="center" alignItems="center">
@@ -114,7 +108,6 @@ function Register(props) {
                 </Paper>
             </Grid>
         </div>
-
     );
 };
 
