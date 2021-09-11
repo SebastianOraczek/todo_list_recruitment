@@ -1,0 +1,64 @@
+const styles = {
+    container: {
+        backgroundColor: "#2b2c2c",
+        width: "400px",
+        marginTop: "2rem",
+    },
+    login: {
+        color: "#faa307",
+        fontSize: "30px",
+        fontWeight: "700",
+        letterSpacing: "1px",
+        margin: "1.3rem 0 4rem 0",
+        display: "flex",
+        justifyContent: "center"
+    },
+    inputBox: {
+        display: "flex",
+        justifyContent: "center",
+    },
+    input: {
+        borderRadius: "0.3rem",
+        border: "none",
+        width: "100%",
+        margin: "0.5rem 3rem",
+        height: "20px"
+    },
+    buttonBox: {
+        display: "flex",
+        justifyContent: "center"
+    },
+    button: {
+        backgroundColor: "#faa307",
+        color: "white",
+        margin: "1.5rem 0",
+        width: "7rem",
+        "&:hover": {
+            backgroundColor: "#fab610",
+        }
+    },
+    span: {
+        color: "white",
+        display: "flex",
+        justifyContent: "center",
+        fontSize: "15px",
+        marginBottom: "2rem"
+    },
+    linkBox: {
+        display: "flex",
+        justifyContent: "center",
+    },
+    link: {
+        marginBottom: "3.5rem",
+        textDecoration: "none",
+        color: "#faa307",
+        fontSize: "17px",
+        transition: "all 0.1s ease-in",
+        "&:hover": {
+            color: "#fab610",
+            transform: "translateY(-3px)"
+        }
+    }
+};
+
+export default styles;
