@@ -1,13 +1,13 @@
-import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import ListItem from "@material-ui/core/ListItem";
 
 function Todo(props) {
-    const { task } = props;
+    const { name } = props;
 
     return (
         <ListItem style={{ height: "64px" }}>
-            <ListItemText>{task}</ListItemText>
-        </ListItem >
+            <ListItemText>{name}</ListItemText>
+        </ListItem>
     );
 };
 

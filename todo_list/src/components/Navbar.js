@@ -1,6 +1,6 @@
 import { withRouter } from "react-router";
 
-import { getUser, deleteUser } from "../utils/localStorage";
+import { deleteUser } from "../utils/localStorage";
 
 import { withStyles } from '@material-ui/core/styles';
 import styles from "../styles/NavbarStyles";
