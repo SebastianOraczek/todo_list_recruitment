@@ -19,7 +19,7 @@ function NewForm(props) {
     const [tasks, setTasks] = useState([]);
     const [isAlert, toggleAlert] = useToggleState(false);
 
-    const addTask = (evt) => {
+    const addTask = () => {
         if (taskName.length) {
             const name = taskName;
             setTasks([...tasks, { name, isDone }]);
@@ -27,6 +27,10 @@ function NewForm(props) {
         } else {
             toggleAlert();
         }
+    };
+
+    const cancelTasks = () => {
+        setTasks([]);
     };
 
     return (
@@ -63,7 +67,7 @@ function NewForm(props) {
                             onChange={setTaskName}
                         />
                         <div>
-                            <Button variant="contained" color="secondary">Cancel</Button>
+                            <Button variant="contained" color="secondary" onClick={cancelTasks}>Cancel</Button>
                             <Button variant="contained" color="primary" onClick={addTask}>ADD</Button>
                         </div>
                     </form>

@@ -19,7 +19,6 @@ function Task(props) {
                 {name}
             </ListItemText>
         </ListItem>
-
     );
 };
 

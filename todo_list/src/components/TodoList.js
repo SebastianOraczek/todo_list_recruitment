@@ -19,7 +19,7 @@ const defaultTodos = [
 function TodoList(props) {
     const [search, setSearch, resetSearch] = useInputState("");
     const [todos, setTodos] = useState(defaultTodos);
-    const [isActive, toggleActive] = useToggleState(true);
+    const [isActive, toggleActive] = useToggleState(false);
 
     return (
         <Grid container justifyContent="center" alignItems="center">
