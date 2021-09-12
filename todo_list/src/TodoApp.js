@@ -3,12 +3,13 @@ import { Route, Switch } from "react-router-dom";
 
 import Register from "./components/Register";
 import Login from "./components/Login";
-import TodoLists from "./components/TodoLists";
-import Navbar from "./components/Navbar"
+import Navbar from "./components/Navbar";
+import TodoList from "./components/TodoList";
 
 function TodoApp() {
     return (
-        <div style={{ background: "rgba(0,0,0,0.9)", height: "100vh" }}>
+        <div>
+            {/* style={{ background: "rgba(0,0,0,0.9)", height: "100vh" }} */}
             <Navbar />
             <Switch>
                 <Route
@@ -29,7 +30,7 @@ function TodoApp() {
                 <Route
                     exact
                     path="/lists"
-                    render={(routeProps) => <TodoLists {...routeProps} />}
+                    render={(routeProps) => <TodoList {...routeProps} />}
                 />
             </Switch>
         </div>

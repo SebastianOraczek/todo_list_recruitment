@@ -35,15 +35,15 @@ function Register(props) {
 
             res.status === 200
                 ? history.push("/login")
-                : toggle(true);
+                : toggle();
 
         } else {
-            toggle(true);
+            toggle();
         };
     };
 
-    const backToLogin = () => {
-        history.push("/login");
+    const backPage = () => {
+        history.goBack();
     };
 
     return (
@@ -55,7 +55,7 @@ function Register(props) {
             )}
             <Grid container justifyContent="center" alignItems="center">
                 <Paper className={classes.container}>
-                    <IconButton aria-label="Back" className={classes.arrow} onClick={backToLogin}>
+                    <IconButton aria-label="Back" className={classes.arrow} onClick={backPage}>
                         <ArrowBackIcon />
                     </IconButton>
                     <p className={classes.text}>Create an new account </p>

@@ -25,7 +25,6 @@ function Login(props) {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)
-
         });
         console.log(res);
 
@@ -33,7 +32,7 @@ function Login(props) {
             window.localStorage.setItem("user", JSON.stringify(user));
             history.push("/lists");
         } else {
-            toggle(true);
+            toggle();
         };
     };
 
