@@ -1,7 +1,5 @@
 import { withRouter } from "react-router";
 
-import { deleteUser } from "../utils/localStorage";
-
 import { withStyles } from '@material-ui/core/styles';
 import styles from "../styles/NavbarStyles";
 import IconButton from '@material-ui/core/IconButton';
@@ -11,7 +9,7 @@ function Navbar(props) {
     const { classes, history } = props;
 
     const logout = () => {
-        deleteUser();
+        window.localStorage.setItem("user", "")
         history.push("/login");
     };
 

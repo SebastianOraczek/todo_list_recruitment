@@ -15,7 +15,7 @@ function Login(props) {
     const {
         identifier, setIdentifier,
         password, setPassword,
-        isAlerts, toggle,
+        isAlert, toggle,
         resetIdentifier, resetPassword,
     } = useContext(LoginContext);
 
@@ -30,10 +30,10 @@ function Login(props) {
             body: JSON.stringify(user)
         });
         const promiseObj = await res.json();
-        setJwt(String(promiseObj.jwt));
+        setJwt(promiseObj.jwt);
         console.log(jwt);
 
-        if (res.status === 200) {
+        if (res.status === 200 && jwt) {
             window.localStorage.setItem("user", JSON.stringify(user));
             history.push("/lists");
             resetIdentifier();
@@ -45,7 +45,7 @@ function Login(props) {
 
     return (
         <div>
-            {isAlerts && (
+            {isAlert && (
                 <Alert severity="error"
                     onClose={toggle} > Incorrect Login or password
                 </Alert >

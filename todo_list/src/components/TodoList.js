@@ -15,9 +15,12 @@ function TodoList(props) {
         tasks, setTasks,
         listName, setListName,
         isActive, toggleActive,
-        todos,
+        todos, setTodos,
+        setListElement,
     } = useContext(TodoListContext);
 
+
+    console.log(todos)
     return (
         <Grid container justifyContent="center" alignItems="center">
             {isActive
@@ -29,6 +32,9 @@ function TodoList(props) {
                     setTasks={setTasks}
                     listName={listName}
                     setListName={setListName}
+                    setListElement={setListElement}
+                    setTodos={setTodos}
+                    todos={todos}
                 />
                 : (
                     <Paper>

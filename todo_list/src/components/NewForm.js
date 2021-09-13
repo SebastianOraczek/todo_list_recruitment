@@ -1,9 +1,10 @@
-import { memo, useEffect } from "react";
+import { memo, useContext } from "react"
 import axios from "axios";
+
 import Task from "./Task";
 import useInputState from '../hooks/useInputState';
 import useToggleState from "../hooks/useToggleState";
-import { getUser } from "../utils/localStorage";
+import { JwtContext } from "../contexts/TodosContext";
 
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -17,35 +18,18 @@ function NewForm(props) {
         toggleActive,
         tasks, setTasks,
         listName, setListName,
-        todoList, setTodoList
+        todoList, setTodoList,
+        setListElement,
+        todos, setTodos
     } = props;
+    const { jwt } = useContext(JwtContext);
     const [isDone, toggleIsDone] = useToggleState(false);
     const [taskName, setTaskName, resetTaskName] = useInputState("");
     const [isAlertTask, toggleAlertTask] = useToggleState(false);
     const [isAlertListName, toggleAlertListName] = useToggleState(false);
 
-    // Nie zapisuje się pierwsze zdaanie
-    console.log(todoList)
-    // console.log(getUser().jwt)
-    // useEffect(() => {
-
-    //     axios
-    //         .get(`https://recruitment.ultimate.systems/to-do-lists/`, {
-    //             headers: {
-    //                 Authorization: `Bearer ${getUser().jwt}`,
-    //             },
-    //         })
-    //         .then((response) => {
-    //             console.log(response);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         });
-    // }, []);
-
-
-
-
+    // Nie zapisuje się pierwsze zadnie
+    // console.log(todoList);
 
     const addTask = () => {
         if (taskName.length) {
@@ -62,12 +46,41 @@ function NewForm(props) {
         setTasks([]);
     };
 
-    const handleSave = () => {
+    const listNameAlert = () => {
         if (listName.length > 0) {
             setTodoList({ ...todoList, name: listName });
         } else {
             toggleAlertListName();
-        }
+        };
+    }
+
+
+    const handleRes = (res) => {
+        const name = res.data.name
+        const id = res.data.id
+        const published = res.data.published_at
+        const task = res.data.task
+
+        setTodos([...todos, { name, task, id, published }]);
+    };
+
+    const handleSave = async () => {
+        listNameAlert();
+
+        const name = listName;
+        const task = tasks;
+        const url = "https://recruitment.ultimate.systems/to-do-lists";
+        const res = await axios.post(url, { name, task }, {
+            headers: {
+                Authorization: `Bearer ${jwt}`,
+                "Content-Type": "application/json"
+            }
+        });
+        // console.log(res.data)
+        handleRes(res);
+
+        toggleActive();
+        cancelTasks();
     };
 
     return (

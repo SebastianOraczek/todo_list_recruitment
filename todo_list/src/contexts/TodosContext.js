@@ -31,8 +31,9 @@ export function TodosProvider(props) {
     const [todoList, setTodoList] = useState({ name: "", task: [] });
     const [tasks, setTasks] = useState([]);
     const [listName, setListName] = useInputState("");
-    const [todos, setTodos] = useState(defaultTodos);
-    const [isActive, toggleActive] = useToggleState(true);
+    const [todos, setTodos] = useState([]);
+    const [isActive, toggleActive] = useToggleState(false);
+    const [listElement, setListElement] = useState({});
 
     // Stan pozwalający na otrzymanie jwt
     const [jwt, setJwt] = useState("");
@@ -59,7 +60,8 @@ export function TodosProvider(props) {
                         tasks, setTasks,
                         listName, setListName,
                         isActive, toggleActive,
-                        todos, setTodos
+                        todos, setTodos,
+                        listElement, setListElement
                     }}>
                         {props.children}
                     </TodoListContext.Provider>
