@@ -17,16 +17,29 @@ function NewForm(props) {
     const [taskName, setTaskName, resetTaskName] = useInputState("");
     const [isDone, toggleIsDone] = useToggleState(false);
     const [tasks, setTasks] = useState([]);
+    console.log(tasks)
     const [isAlert, toggleAlert] = useToggleState(false);
+
+    const [todoList, setTodoList] = useInputState({ name: "List name", task: [{ name: "task 1", isDone: false }] })
+    console.log(todoList)
 
     const addTask = () => {
         if (taskName.length) {
             const name = taskName;
             setTasks([...tasks, { name, isDone }]);
+            setTodoList();
             resetTaskName();
         } else {
             toggleAlert();
-        }
+        };
+
+        // if (taskName.length) {
+        //     const name = taskName;
+        //     setTasks([...tasks, { name, isDone }]);
+        //     resetTaskName();
+        // } else {
+        //     toggleAlert();
+        // }
     };
 
     const cancelTasks = () => {
@@ -45,43 +58,43 @@ function NewForm(props) {
             <Grid container justifyContent="center" alignItems="center">
                 <Paper>
                     <form>
-                        <input
-                            type="text"
-                            placeholder="List name"
-                            name="List name"
-                            value={listName}
-                            onChange={setListName}
-                        />
-                    </form>
-                    <form>
-                        <Checkbox
-                            tabIndex={-1}
-                            checked={isDone}
-                            onClick={toggleIsDone}
-                        />
-                        <TextField
-                            type="text"
-                            placeholder="Task"
-                            name="Task"
-                            value={taskName}
-                            onChange={setTaskName}
-                        />
                         <div>
-                            <Button variant="contained" color="secondary" onClick={cancelTasks}>Cancel</Button>
-                            <Button variant="contained" color="primary" onClick={addTask}>ADD</Button>
+                            <input
+                                type="text"
+                                placeholder={todoList.name}
+                                name="List name"
+                                value={listName}
+                                onChange={setListName}
+                            />
+                        </div>
+                        <div>
+                            <Checkbox
+                                tabIndex={-1}
+                                checked={isDone}
+                                onClick={toggleIsDone}
+                            />
+                            <TextField
+                                type="text"
+                                placeholder="Task"
+                                name="Task"
+                                value={taskName}
+                                onChange={setTaskName}
+                            />
+                            <div>
+                                <Button variant="contained" color="secondary" onClick={cancelTasks}>Cancel</Button>
+                                <Button variant="contained" color="primary" onClick={addTask}>ADD</Button>
+                            </div>
+                        </div>
+                        <div>
+                            {tasks.map((task, i) => (
+                                <Task {...task} key={i} />
+                            ))}
+                        </div>
+                        <div style={{ marginTop: "2rem" }}>
+                            <Button variant="contained" color="secondary" onClick={toggleActive}>Cancel</Button>
+                            <Button variant="contained" color="primary">Save</Button>
                         </div>
                     </form>
-                    <div>
-                        {tasks.map((task, i) => (
-                            <Task {...task}
-                                key={i}
-                            />
-                        ))}
-                    </div>
-                    <div style={{ marginTop: "4rem" }}>
-                        <Button variant="contained" color="secondary" onClick={toggleActive}>Cancel</Button>
-                        <Button variant="contained" color="primary">ADD</Button>
-                    </div>
                 </Paper>
             </Grid>
         </div>
@@ -89,3 +102,12 @@ function NewForm(props) {
 };
 
 export default NewForm;
+
+// {
+//     name: "LIST",
+//     task: [
+//         {
+//           name: "task1",
+//           isDone: false,
+//     ]
+// }

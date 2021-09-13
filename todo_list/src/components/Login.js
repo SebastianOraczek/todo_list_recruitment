@@ -1,7 +1,6 @@
+import { useContext } from "react";
+import { LoginContext } from "../contexts/TodosContext";
 import { Link } from "react-router-dom";
-
-import useInputState from "../hooks/useInputState";
-import useToggleState from "../hooks/useToggleState";
 
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -12,9 +11,12 @@ import styles from "../styles/LoginStyles";
 
 function Login(props) {
     const { history, classes } = props;
-    const [identifier, setIdentifier] = useInputState("");
-    const [password, setPassword] = useInputState("");
-    const [isAlert, toggle] = useToggleState(false);
+    const {
+        identifier, setIdentifier,
+        password, setPassword,
+        isAlerts, toggle,
+        resetIdentifier, resetPassword
+    } = useContext(LoginContext);
 
     const handleSubmit = async (evt) => {
         evt.preventDefault();
@@ -31,6 +33,8 @@ function Login(props) {
         if (res.status === 200) {
             window.localStorage.setItem("user", JSON.stringify(user));
             history.push("/lists");
+            resetIdentifier();
+            resetPassword();
         } else {
             toggle();
         };
@@ -38,7 +42,7 @@ function Login(props) {
 
     return (
         <div>
-            {isAlert && (
+            {isAlerts && (
                 <Alert severity="error"
                     onClose={toggle} > Incorrect Login or password
                 </Alert >
