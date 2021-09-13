@@ -8,11 +8,6 @@ export const RegisterContext = createContext();
 export const TodoListContext = createContext();
 export const JwtContext = createContext();
 
-const defaultTodos = [
-    { id: 1, name: "Mow the lawn using goats", completed: false },
-    { id: 2, name: "Release lady bugs into garden", completed: true }
-]
-
 export function TodosProvider(props) {
 
     // Stany dla komponentu Login
@@ -32,7 +27,7 @@ export function TodosProvider(props) {
     const [tasks, setTasks] = useState([]);
     const [listName, setListName] = useInputState("");
     const [todos, setTodos] = useState([]);
-    const [isActive, toggleActive] = useToggleState(false);
+    const [isActive, toggleActive] = useToggleState(true);
     const [listElement, setListElement] = useState({});
 
     // Stan pozwalający na otrzymanie jwt

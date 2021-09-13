@@ -1,4 +1,5 @@
 import { memo, useContext } from "react"
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 import Task from "./Task";
@@ -9,9 +10,12 @@ import { JwtContext } from "../contexts/TodosContext";
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
 import Checkbox from '@material-ui/core/Checkbox';
 import Alert from '@material-ui/lab/Alert';
+import Divider from '@material-ui/core/Divider';
+
+import { withStyles } from '@material-ui/core/styles';
+import styles from "../styles/NewFormStyles";
 
 function NewForm(props) {
     const {
@@ -20,7 +24,8 @@ function NewForm(props) {
         listName, setListName,
         todoList, setTodoList,
         setListElement,
-        todos, setTodos
+        todos, setTodos,
+        classes
     } = props;
     const { jwt } = useContext(JwtContext);
     const [isDone, toggleIsDone] = useToggleState(false);
@@ -32,7 +37,7 @@ function NewForm(props) {
     // console.log(todoList);
 
     const addTask = () => {
-        if (taskName.length) {
+        if (taskName) {
             const name = taskName;
             setTasks([...tasks, { name, isDone }]);
             setTodoList({ task: [...todoList.task, ...tasks] });
@@ -46,14 +51,18 @@ function NewForm(props) {
         setTasks([]);
     };
 
+    const handleCancelList = () => {
+        cancelTasks();
+        toggleActive();
+    };
+
     const listNameAlert = () => {
         if (listName.length > 0) {
             setTodoList({ ...todoList, name: listName });
         } else {
             toggleAlertListName();
         };
-    }
-
+    };
 
     const handleRes = (res) => {
         const name = res.data.name
@@ -88,7 +97,7 @@ function NewForm(props) {
             <div style={{ width: "100vw" }}>
                 {isAlertTask && (
                     <Alert severity="error"
-                        onClose={toggleAlertTask} > Please enter a task name
+                        onClose={toggleAlertTask} > Please enter a task
                     </Alert >
                 )}
                 {isAlertListName && (
@@ -98,43 +107,59 @@ function NewForm(props) {
                 )}
             </div>
             <Grid container justifyContent="center" alignItems="center">
-                <Paper>
+                <Paper className={classes.container}>
                     <form>
-                        <div>
+                        <div className={classes.listInputBox}>
                             <input
                                 type="text"
                                 placeholder="Enter a list name"
                                 name="List name"
                                 value={listName}
                                 onChange={setListName}
+                                className={classes.listInput}
                             />
                         </div>
-                        <div>
-                            <Checkbox
-                                tabIndex={-1}
-                                checked={isDone}
-                                onClick={toggleIsDone}
-                            />
-                            <TextField
-                                type="text"
-                                placeholder="Task"
-                                name="Task"
-                                value={taskName}
-                                onChange={setTaskName}
-                            />
-                            <div>
-                                <Button variant="contained" color="secondary" onClick={cancelTasks}>Cancel</Button>
-                                <Button variant="contained" color="primary" onClick={addTask}>ADD</Button>
-                            </div>
+                        <Divider className={classes.divider} />
+                        <Checkbox
+                            tabIndex={-1}
+                            checked={isDone}
+                            onClick={toggleIsDone}
+                            className={classes.checkbox}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Task name"
+                            name="Task name"
+                            value={taskName}
+                            onChange={setTaskName}
+                            className={classes.taskInput}
+                        />
+                        <div className={classes.buttonBox}>
+                            <Button variant="contained" color="secondary"
+                                onClick={cancelTasks} className={classes.cancelBtn}
+                            >
+                                Cancel
+                            </Button>
+                            <Button variant="contained" color="primary"
+                                onClick={addTask} className={classes.addBtn}
+                            >
+                                ADD
+                            </Button>
                         </div>
                         <div>
                             {tasks.map((task, i) => (
                                 <Task {...task} key={i} />
                             ))}
                         </div>
-                        <div style={{ marginTop: "2rem" }}>
-                            <Button variant="contained" color="secondary" onClick={toggleActive}>Cancel</Button>
-                            <Button variant="contained" color="primary" onClick={handleSave}>Save</Button>
+                        <div className={classes.buttonBox2}>
+                            <Link to="/lists" onClick={handleCancelList} className={classes.cancelBtn2}>
+                                Cancel
+                            </Link>
+                            <Button variant="contained" color="primary"
+                                onClick={handleSave} className={classes.saveBtn}
+                            >
+                                Save
+                            </Button>
                         </div>
                     </form>
                 </Paper>
@@ -143,4 +168,4 @@ function NewForm(props) {
     );
 };
 
-export default memo(NewForm);
+export default withStyles(styles)(memo(NewForm));
