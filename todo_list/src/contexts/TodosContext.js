@@ -6,6 +6,7 @@ import useToggleState from "../hooks/useToggleState";
 export const LoginContext = createContext();
 export const RegisterContext = createContext();
 export const TodoListContext = createContext();
+export const JwtContext = createContext();
 
 const defaultTodos = [
     { id: 1, name: "Mow the lawn using goats", completed: false },
@@ -27,34 +28,43 @@ export function TodosProvider(props) {
     const [isAlertRegister, toggleAlertRegister] = useToggleState(false);
 
     // Stany dla komponentu TodoList, które częściowo przekazywane są do komponentu NewForm
-    const [todoList, setTodoList] = useState({ name: "List name", task: [{ name: "task 1", isDone: false }] });
+    const [todoList, setTodoList] = useState({ name: "", task: [] });
     const [tasks, setTasks] = useState([]);
     const [listName, setListName] = useInputState("");
     const [todos, setTodos] = useState(defaultTodos);
     const [isActive, toggleActive] = useToggleState(true);
 
+    // Stan pozwalający na otrzymanie jwt
+    const [jwt, setJwt] = useState("");
+
     return (
-        <LoginContext.Provider value={{
-            identifier, setIdentifier, resetIdentifier,
-            password, setPassword, resetPassword, isAlert, toggle,
-        }}>
-            <RegisterContext.Provider value={{
-                username, changeUsername,
-                email, changeEmail,
-                passwordRegister, changePasswordRegister,
-                repPassword, changeRepPassword,
-                isAlertRegister, toggleAlertRegister
+        <JwtContext.Provider value={{
+            jwt, setJwt
+        }}
+        >
+            <LoginContext.Provider value={{
+                identifier, setIdentifier, resetIdentifier,
+                password, setPassword, resetPassword,
+                isAlert, toggle,
             }}>
-                <TodoListContext.Provider value={{
-                    todoList, setTodoList,
-                    tasks, setTasks,
-                    listName, setListName,
-                    isActive, toggleActive,
-                    todos, setTodos
+                <RegisterContext.Provider value={{
+                    username, changeUsername,
+                    email, changeEmail,
+                    passwordRegister, changePasswordRegister,
+                    repPassword, changeRepPassword,
+                    isAlertRegister, toggleAlertRegister
                 }}>
-                    {props.children}
-                </TodoListContext.Provider>
-            </RegisterContext.Provider>
-        </LoginContext.Provider>
+                    <TodoListContext.Provider value={{
+                        todoList, setTodoList,
+                        tasks, setTasks,
+                        listName, setListName,
+                        isActive, toggleActive,
+                        todos, setTodos
+                    }}>
+                        {props.children}
+                    </TodoListContext.Provider>
+                </RegisterContext.Provider>
+            </LoginContext.Provider>
+        </JwtContext.Provider>
     );
 };

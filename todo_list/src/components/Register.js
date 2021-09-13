@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { RegisterContext } from "../contexts/TodosContext";
 
 import Paper from '@material-ui/core/Paper';
@@ -20,11 +20,13 @@ function Register(props) {
         isAlertRegister, toggleAlertRegister
     } = useContext(RegisterContext);
 
+    const [jwt, setJwt] = useState("");
+
     const handleSubmit = async (evt) => {
         evt.preventDefault();
 
         if (passwordRegister && passwordRegister === repPassword) {
-            const user = { username, email, passwordRegister };
+            const user = { username, email, passwordRegister, jwt };
             console.log(user);
 
             const url = "https://recruitment.ultimate.systems/auth/local/register";
@@ -35,9 +37,11 @@ function Register(props) {
             });
             console.log(res);
 
-            res.status === 200
-                ? history.push("/login")
-                : toggleAlertRegister();
+            if (res.status === 200) {
+                history.push("/login")
+            } else {
+                toggleAlertRegister();
+            }
 
         } else {
             toggleAlertRegister();

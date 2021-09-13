@@ -35,7 +35,7 @@ const styles = {
         margin: "1.5rem 0",
         width: "7.5rem",
         "&:hover": {
-            backgroundColor: "#fab610",
+            backgroundColor: "#fab640",
         }
     },
     arrow: {
@@ -43,7 +43,7 @@ const styles = {
         marginTop: "0.3rem",
         transition: "all 0.2s ease-in-out",
         "&:hover": {
-            transform: "translateX(3px)",
+            transform: "translateX(6px)",
         }
     }
 };

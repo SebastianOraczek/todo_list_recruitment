@@ -18,7 +18,7 @@ function Navbar(props) {
     return (
         <div>
             <p className={classes.text}>ToDo-List</p>
-            {window.localStorage.user.length > 1 &&
+            {window.localStorage && window.localStorage.user.length > 1 &&
                 (
                     <IconButton onClick={logout} className={classes.logout}>
                         <ExitToAppIcon className={classes.logoutIcon} />

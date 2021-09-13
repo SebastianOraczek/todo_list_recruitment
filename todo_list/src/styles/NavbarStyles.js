@@ -15,9 +15,13 @@ const styles = {
         right: "1.5rem",
         paddingTop: "0.3rem",
         color: "#faa307",
+        transition: "all 0.2s ease-in-out",
+        "&:hover": {
+            transform: "translateX(-7px)",
+        }
     },
     logoutIcon: {
-        fontSize: "2rem"
+        fontSize: "2rem",
     }
 };
 

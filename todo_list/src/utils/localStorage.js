@@ -1,5 +1,5 @@
-export const getUser = () => {
-    window.localStorage.getItem("user");
+export const getUser = (user) => {
+    window.localStorage.getItem("user", user);
 };
 
 export const deleteUser = () => {

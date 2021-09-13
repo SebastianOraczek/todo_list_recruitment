@@ -53,10 +53,10 @@ const styles = {
         textDecoration: "none",
         color: "#faa307",
         fontSize: "17px",
-        transition: "all 0.1s ease-in",
+        transition: "all 0.2s ease-in-out",
         "&:hover": {
-            color: "#fab610",
-            transform: "translateY(-3px)"
+            color: "#fab640",
+            transform: "translateY(-4px)"
         }
     }
 };

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { LoginContext } from "../contexts/TodosContext";
+import { JwtContext, LoginContext } from "../contexts/TodosContext";
 import { Link } from "react-router-dom";
 
 import Paper from '@material-ui/core/Paper';
@@ -11,11 +11,12 @@ import styles from "../styles/LoginStyles";
 
 function Login(props) {
     const { history, classes } = props;
+    const { jwt, setJwt } = useContext(JwtContext);
     const {
         identifier, setIdentifier,
         password, setPassword,
         isAlerts, toggle,
-        resetIdentifier, resetPassword
+        resetIdentifier, resetPassword,
     } = useContext(LoginContext);
 
     const handleSubmit = async (evt) => {
@@ -28,7 +29,9 @@ function Login(props) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)
         });
-        console.log(res);
+        const promiseObj = await res.json();
+        setJwt(String(promiseObj.jwt));
+        console.log(jwt);
 
         if (res.status === 200) {
             window.localStorage.setItem("user", JSON.stringify(user));

@@ -1,7 +1,9 @@
-// import axios from "axios";
+import { memo, useEffect } from "react";
+import axios from "axios";
 import Task from "./Task";
 import useInputState from '../hooks/useInputState';
 import useToggleState from "../hooks/useToggleState";
+import { getUser } from "../utils/localStorage";
 
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -19,9 +21,31 @@ function NewForm(props) {
     } = props;
     const [isDone, toggleIsDone] = useToggleState(false);
     const [taskName, setTaskName, resetTaskName] = useInputState("");
-    const [isAlert, toggleAlert] = useToggleState(false);
+    const [isAlertTask, toggleAlertTask] = useToggleState(false);
+    const [isAlertListName, toggleAlertListName] = useToggleState(false);
 
+    // Nie zapisuje się pierwsze zdaanie
     console.log(todoList)
+    // console.log(getUser().jwt)
+    // useEffect(() => {
+
+    //     axios
+    //         .get(`https://recruitment.ultimate.systems/to-do-lists/`, {
+    //             headers: {
+    //                 Authorization: `Bearer ${getUser().jwt}`,
+    //             },
+    //         })
+    //         .then((response) => {
+    //             console.log(response);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //         });
+    // }, []);
+
+
+
+
 
     const addTask = () => {
         if (taskName.length) {
@@ -30,7 +54,7 @@ function NewForm(props) {
             setTodoList({ task: [...todoList.task, ...tasks] });
             resetTaskName();
         } else {
-            toggleAlert();
+            toggleAlertTask();
         };
     };
 
@@ -39,15 +63,24 @@ function NewForm(props) {
     };
 
     const handleSave = () => {
-        setTodoList({ ...todoList, name: listName });
+        if (listName.length > 0) {
+            setTodoList({ ...todoList, name: listName });
+        } else {
+            toggleAlertListName();
+        }
     };
 
     return (
         <div>
             <div style={{ width: "100vw" }}>
-                {isAlert && (
+                {isAlertTask && (
                     <Alert severity="error"
-                        onClose={toggleAlert} > Please enter a task name
+                        onClose={toggleAlertTask} > Please enter a task name
+                    </Alert >
+                )}
+                {isAlertListName && (
+                    <Alert severity="error"
+                        onClose={toggleAlertListName} > Please enter a list name
                     </Alert >
                 )}
             </div>
@@ -97,13 +130,4 @@ function NewForm(props) {
     );
 };
 
-export default NewForm;
-
-// {
-//     name: "LIST",
-//     task: [
-//         {
-//           name: "task1",
-//           isDone: false,
-//     ]
-// }
+export default memo(NewForm);
