@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import Task from "./Task";
 import useInputState from '../hooks/useInputState';
 import useToggleState from "../hooks/useToggleState";
@@ -12,34 +10,24 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Alert from '@material-ui/lab/Alert';
 
 function NewForm(props) {
-    const { toggleActive } = props;
-    const [listName, setListName] = useInputState("");
-    const [taskName, setTaskName, resetTaskName] = useInputState("");
+    const {
+        toggleActive,
+        tasks, setTasks,
+        listName, setListName
+    } = props;
     const [isDone, toggleIsDone] = useToggleState(false);
-    const [tasks, setTasks] = useState([]);
-    console.log(tasks)
+    const [taskName, setTaskName, resetTaskName] = useInputState("");
     const [isAlert, toggleAlert] = useToggleState(false);
-
-    const [todoList, setTodoList] = useInputState({ name: "List name", task: [{ name: "task 1", isDone: false }] })
-    console.log(todoList)
 
     const addTask = () => {
         if (taskName.length) {
             const name = taskName;
             setTasks([...tasks, { name, isDone }]);
-            setTodoList();
+            // setTodoList({ ...todoList, task: [{ ...tasks }] });
             resetTaskName();
         } else {
             toggleAlert();
         };
-
-        // if (taskName.length) {
-        //     const name = taskName;
-        //     setTasks([...tasks, { name, isDone }]);
-        //     resetTaskName();
-        // } else {
-        //     toggleAlert();
-        // }
     };
 
     const cancelTasks = () => {
@@ -61,7 +49,7 @@ function NewForm(props) {
                         <div>
                             <input
                                 type="text"
-                                placeholder={todoList.name}
+                                placeholder="Enter a list name"
                                 name="List name"
                                 value={listName}
                                 onChange={setListName}
@@ -98,7 +86,7 @@ function NewForm(props) {
                 </Paper>
             </Grid>
         </div>
-    )
+    );
 };
 
 export default NewForm;

@@ -1,10 +1,16 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
 import useInputState from "../hooks/useInputState";
 import useToggleState from "../hooks/useToggleState";
 
 export const LoginContext = createContext();
 export const RegisterContext = createContext();
+export const TodoListContext = createContext();
+
+const defaultTodos = [
+    { id: 1, name: "Mow the lawn using goats", completed: false },
+    { id: 2, name: "Release lady bugs into garden", completed: true }
+]
 
 export function TodosProvider(props) {
 
@@ -20,6 +26,13 @@ export function TodosProvider(props) {
     const [repPassword, changeRepPassword] = useInputState("");
     const [isAlertRegister, toggleAlertRegister] = useToggleState(false);
 
+    // Stany dla komponentu TodoList, które częściowo przekazywane są do komponentu NewForm
+    const [todoList, setTodoList] = useInputState({ name: "List name", task: [{ name: "task 1", isDone: false }] });
+    const [tasks, setTasks] = useState([]);
+    const [listName, setListName] = useInputState("");
+    const [todos, setTodos] = useState(defaultTodos);
+    const [isActive, toggleActive] = useToggleState(true);
+
     return (
         <LoginContext.Provider value={{
             identifier, setIdentifier, resetIdentifier,
@@ -32,7 +45,15 @@ export function TodosProvider(props) {
                 repPassword, changeRepPassword,
                 isAlertRegister, toggleAlertRegister
             }}>
-                {props.children}
+                <TodoListContext.Provider value={{
+                    todoList, setTodoList,
+                    tasks, setTasks,
+                    listName, setListName,
+                    isActive, toggleActive,
+                    todos, setTodos
+                }}>
+                    {props.children}
+                </TodoListContext.Provider>
             </RegisterContext.Provider>
         </LoginContext.Provider>
     );
