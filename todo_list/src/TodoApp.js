@@ -16,7 +16,7 @@ function TodoApp() {
                 <Route
                     exact
                     path="/"
-                    render={() => <h1>Home Page</h1>}
+                    render={() => <Login />}
                 />
                 <Route
                     exact

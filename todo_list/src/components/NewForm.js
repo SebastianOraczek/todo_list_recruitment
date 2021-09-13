@@ -1,3 +1,4 @@
+// import axios from "axios";
 import Task from "./Task";
 import useInputState from '../hooks/useInputState';
 import useToggleState from "../hooks/useToggleState";
@@ -13,17 +14,20 @@ function NewForm(props) {
     const {
         toggleActive,
         tasks, setTasks,
-        listName, setListName
+        listName, setListName,
+        todoList, setTodoList
     } = props;
     const [isDone, toggleIsDone] = useToggleState(false);
     const [taskName, setTaskName, resetTaskName] = useInputState("");
     const [isAlert, toggleAlert] = useToggleState(false);
 
+    console.log(todoList)
+
     const addTask = () => {
         if (taskName.length) {
             const name = taskName;
             setTasks([...tasks, { name, isDone }]);
-            // setTodoList({ ...todoList, task: [{ ...tasks }] });
+            setTodoList({ task: [...todoList.task, ...tasks] });
             resetTaskName();
         } else {
             toggleAlert();
@@ -32,6 +36,10 @@ function NewForm(props) {
 
     const cancelTasks = () => {
         setTasks([]);
+    };
+
+    const handleSave = () => {
+        setTodoList({ ...todoList, name: listName });
     };
 
     return (
@@ -80,7 +88,7 @@ function NewForm(props) {
                         </div>
                         <div style={{ marginTop: "2rem" }}>
                             <Button variant="contained" color="secondary" onClick={toggleActive}>Cancel</Button>
-                            <Button variant="contained" color="primary">Save</Button>
+                            <Button variant="contained" color="primary" onClick={handleSave}>Save</Button>
                         </div>
                     </form>
                 </Paper>

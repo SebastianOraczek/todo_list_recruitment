@@ -27,7 +27,7 @@ export function TodosProvider(props) {
     const [isAlertRegister, toggleAlertRegister] = useToggleState(false);
 
     // Stany dla komponentu TodoList, które częściowo przekazywane są do komponentu NewForm
-    const [todoList, setTodoList] = useInputState({ name: "List name", task: [{ name: "task 1", isDone: false }] });
+    const [todoList, setTodoList] = useState({ name: "List name", task: [{ name: "task 1", isDone: false }] });
     const [tasks, setTasks] = useState([]);
     const [listName, setListName] = useInputState("");
     const [todos, setTodos] = useState(defaultTodos);
