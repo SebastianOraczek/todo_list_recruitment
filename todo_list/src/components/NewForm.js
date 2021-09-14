@@ -83,14 +83,12 @@ function NewForm(props) {
                 "Content-Type": "application/json"
             }
         });
-        // console.log(res.data)
         handleRes(res);
 
         toggleActive();
         cancelTasks();
     };
 
-    console.log(allList)
     return (
         <div>
             <div style={{ width: "100vw" }}>

@@ -1,15 +1,13 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 import Task from "./Task";
-import { TodoListContext } from "../contexts/TodosContext";
 
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Grid from "@material-ui/core/Grid";
 import Checkbox from '@material-ui/core/Checkbox';
-// import Alert from '@material-ui/lab/Alert';
 import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
 import styles from "../styles/NewFormStyles";
@@ -18,12 +16,26 @@ function TodoElement(props) {
     const { classes } = props;
     const { id } = props.match.params;
 
-    const {
-        tasks,
-        listName, setListName,
-    } = useContext(TodoListContext);
+    const [listName, setListName] = useState("");
+    const [tasks, setTasks] = useState([]);
 
-    console.log(tasks)
+    useEffect(() => {
+        const jwt = window.localStorage.getItem("jwt");
+        const url = `https://recruitment.ultimate.systems/to-do-lists/${id}`;
+        axios.get(url, {
+            headers: {
+                Authorization: `Bearer ${jwt}`,
+                "Content-Type": "application/json"
+            }
+        })
+            .then(res => handleRes(res))
+            .catch(err => console.log(err))
+    }, []);
+
+    const handleRes = (res) => {
+        setListName(res.data.name)
+        setTasks([...res.data.task]);
+    };
 
     return (
         <Grid container justifyContent="center" alignItems="center">
@@ -34,13 +46,14 @@ function TodoElement(props) {
                             type="text"
                             name="List name"
                             defaultValue={listName}
+                            onChange={evt => setListName(evt.target.value)}
                             className={classes.listInput}
                         />
                     </div>
                     <Divider className={classes.divider} />
                     <div>
                         {tasks.map((task, i) => (
-                            <Task {...task} key={i} />
+                            <Task key={i} {...task} />
                         ))}
                     </div>
                     <div>

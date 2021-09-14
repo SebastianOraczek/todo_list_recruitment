@@ -25,7 +25,6 @@ function Register(props) {
 
         if (passwordRegister && passwordRegister === repPassword) {
             const user = { username, email, passwordRegister };
-            console.log(user);
 
             const url = "https://recruitment.ultimate.systems/auth/local/register";
             const res = await fetch(url, {
@@ -33,7 +32,6 @@ function Register(props) {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(user)
             });
-            console.log(res);
 
             if (res.status === 200) {
                 history.push("/login");
