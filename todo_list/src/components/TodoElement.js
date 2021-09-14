@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 import Task from "./Task";
+import useInputState from "../hooks/useInputState";
+import useToggleState from "../hooks/useToggleState";
 
-import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import Grid from "@material-ui/core/Grid";
 import Checkbox from '@material-ui/core/Checkbox';
 import Divider from '@material-ui/core/Divider';
 import Dialog from '@material-ui/core/Dialog';
@@ -20,6 +20,9 @@ function TodoElement(props) {
 
     const [listName, setListName] = useState("");
     const [tasks, setTasks] = useState([]);
+    const [individualTaskName, setIndividualTaskName, resetTaskName] = useInputState("");
+    const [newTask, setNewTask] = useState([]);
+    const [isDone, setIsDone] = useState(false);
 
     useEffect(() => {
         const jwt = window.localStorage.getItem("jwt");
@@ -65,6 +68,20 @@ function TodoElement(props) {
         history.push("/lists");
     };
 
+    const cancel = () => {
+        history.push("/lists");
+    };
+
+    const addTask = () => {
+        if (individualTaskName.length > 0) {
+            const name = individualTaskName;
+            setNewTask({ name, isDone })
+            setTasks([...tasks, { name, isDone }]);
+            setIsDone(false);
+            resetTaskName();
+        };
+    };
+
     return (
         <Dialog open={true} style={{ marginBottom: "15rem", height: "100vh" }}>
             <DialogContent className={classes.container}>
@@ -88,22 +105,26 @@ function TodoElement(props) {
                         <Checkbox
                             tabIndex={-1}
                             className={classes.checkbox}
+                            checked={isDone}
+                            onChange={() => setIsDone(!isDone)}
                         />
                         <input
                             type="text"
                             placeholder="Task name"
                             name="Task name"
+                            value={individualTaskName}
+                            onChange={setIndividualTaskName}
                             className={classes.taskInput}
                         />
                     </div>
                     <div className={classes.buttonBox}>
                         <Button variant="contained" color="secondary"
-                            className={classes.cancelBtn}
+                            className={classes.cancelBtn} onClick={cancel}
                         >
                             Cancel
                         </Button>
                         <Button variant="contained" color="primary"
-                            className={classes.addBtn}
+                            className={classes.addBtn} onClick={addTask}
                         >
                             ADD
                         </Button>

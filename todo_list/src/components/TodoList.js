@@ -37,8 +37,6 @@ function TodoList(props) {
             .catch(err => console.log(err))
     }, []);
 
-    console.log(allList[0].published_at)
-
     return (
         <Grid container justifyContent="center" alignItems="center">
             {isActive
@@ -59,7 +57,7 @@ function TodoList(props) {
                         <Paper className={classes.container}>
                             <List>
                                 {allList.map((item, i) => (
-                                    <Todo key={i} {...item} />
+                                    <Todo key={i} {...item} published={item.published_at} />
                                 ))}
                             </List>
                             <div className={classes.addBtnBox}>

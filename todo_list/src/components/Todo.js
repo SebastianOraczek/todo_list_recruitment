@@ -11,6 +11,8 @@ function Todo(props) {
     const completed = task.filter(t => t.isDone === true).length;
     const uncompleted = task.filter(t => t.isDone === false).length;
 
+    console.log(date)
+
     return (
         <Link to={`/lists/${id}`} className={classes.container}>
             <ListItem className={classes.item}>
@@ -21,7 +23,7 @@ function Todo(props) {
                     <p className={classes.create}>Created at: {date} </p>
                 </ListItemText>
                 <ListItemText>
-                    <p className={classes.complete}>Completed {completed}, Uncompleted at: {uncompleted}, All: {task.length}</p>
+                    <p className={classes.complete}>Completed {completed} Uncompleted at: {uncompleted} All: {task.length}</p>
                 </ListItemText>
             </ListItem>
         </Link>

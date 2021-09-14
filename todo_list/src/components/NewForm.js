@@ -1,4 +1,4 @@
-import { memo } from "react"
+import { memo, useState } from "react"
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -24,17 +24,18 @@ function NewForm(props) {
         allList, setAllList,
         classes
     } = props;
-    const [isDone, toggleIsDone] = useToggleState(false);
+    const [isDone, toggleIsDone] = useState(false);
     const [taskName, setTaskName, resetTaskName] = useInputState("");
     const [isAlertTask, toggleAlertTask] = useToggleState(false);
     const [isAlertListName, toggleAlertListName] = useToggleState(false);
 
     const addTask = () => {
-        if (taskName.length > 1) {
+        if (taskName.length > 0) {
             const name = taskName;
             setTasks([...tasks, { name, isDone }]);
             setTodoList({ task: [...todoList.task, ...tasks] });
             resetTaskName();
+            toggleIsDone(false);
         } else {
             toggleAlertTask();
         };
@@ -49,13 +50,13 @@ function NewForm(props) {
         toggleActive();
     };
 
-    const listNameAlert = () => {
-        if (listName.length > 0) {
-            setTodoList({ ...todoList, name: listName });
-        } else {
-            toggleAlertListName();
-        };
-    };
+    // const listNameAlert = () => {
+    //     if (listName.length > 0) {
+    //         setTodoList({ ...todoList, name: listName });
+    //     } else {
+    //         toggleAlertListName();
+    //     };
+    // };
 
     const handleRes = (res) => {
         const name = res.data.name
@@ -67,22 +68,26 @@ function NewForm(props) {
     };
 
     const handleSave = async () => {
-        listNameAlert();
+        if (listName.length > 0) {
+            setTodoList({ ...todoList, name: listName });
 
-        const name = listName;
-        const task = tasks;
-        const jwt = window.localStorage.getItem("jwt");
-        const url = "https://recruitment.ultimate.systems/to-do-lists";
-        const res = await axios.post(url, { name, task }, {
-            headers: {
-                Authorization: `Bearer ${jwt}`,
-                "Content-Type": "application/json"
-            }
-        });
-        handleRes(res);
+            const name = listName;
+            const task = tasks;
+            const jwt = window.localStorage.getItem("jwt");
+            const url = "https://recruitment.ultimate.systems/to-do-lists";
+            const res = await axios.post(url, { name, task }, {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                    "Content-Type": "application/json"
+                }
+            });
+            handleRes(res);
 
-        toggleActive();
-        cancelTasks();
+            toggleActive();
+            cancelTasks();
+        } else {
+            toggleAlertListName();
+        };
     };
 
     return (
