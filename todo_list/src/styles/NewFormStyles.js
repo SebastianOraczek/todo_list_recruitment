@@ -38,6 +38,7 @@ const styles = {
     addBtn: {
         marginRight: "0.8rem",
         height: "1.7rem",
+        color: "white",
         padding: "0 1.7rem",
         backgroundColor: "#faa307",
         "&:hover": {

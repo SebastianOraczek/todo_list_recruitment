@@ -15,14 +15,9 @@ import styles from "../styles/TodoListStyles";
 
 function TodoList(props) {
     const { classes } = props;
-    const {
-        todoList, setTodoList,
-        tasks, setTasks,
-        listName, setListName,
-        isActive, toggleActive,
-        setListElement,
-    } = useContext(TodoListContext);
+    const { isActive, toggleActive } = useContext(TodoListContext);
     const [allList, setAllList] = useState([]);
+    const [published, setPublished] = useState("");
 
     useEffect(() => {
         const jwt = window.localStorage.getItem("jwt");
@@ -33,22 +28,25 @@ function TodoList(props) {
                 "Content-Type": "application/json"
             }
         })
-            .then(res => setAllList(res.data))
+            .then(res => {
+                setAllList(res.data)
+                handlePublished(res)
+            })
             .catch(err => console.log(err))
     }, []);
+
+    // Niweluje błąd dotyczący published_at = undefined
+    const handlePublished = (res) => {
+        for (let i = 0; i < res.data.length; i++) {
+            const oneList = res.data[i]
+            setPublished(oneList.published_at)
+        };
+    };
 
     return (
         <Grid container justifyContent="center" alignItems="center">
             {isActive
                 ? <NewForm
-                    toggleActive={toggleActive}
-                    todoList={todoList}
-                    setTodoList={setTodoList}
-                    tasks={tasks}
-                    setTasks={setTasks}
-                    setListName={setListName}
-                    listName={listName}
-                    setListElement={setListElement}
                     allList={allList}
                     setAllList={setAllList}
                 />
@@ -57,12 +55,12 @@ function TodoList(props) {
                         <Paper className={classes.container}>
                             <List>
                                 {allList.map((item, i) => (
-                                    <Todo key={i} {...item} published={item.published_at} />
+                                    <Todo key={i} {...item} published={published} />
                                 ))}
                             </List>
                             <div className={classes.addBtnBox}>
-                                <IconButton>
-                                    <AddCircleIcon onClick={toggleActive} className={classes.addBtn} />
+                                <IconButton onClick={toggleActive}>
+                                    <AddCircleIcon className={classes.addBtn} />
                                 </IconButton>
                             </div>
                         </Paper>

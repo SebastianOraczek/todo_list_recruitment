@@ -1,10 +1,11 @@
-import { memo, useState } from "react"
+import { memo, useState, useContext } from "react"
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 import Task from "./Task";
 import useInputState from '../hooks/useInputState';
 import useToggleState from "../hooks/useToggleState";
+import { TodoListContext } from "../contexts/TodosContext";
 
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -16,18 +17,17 @@ import { withStyles } from '@material-ui/core/styles';
 import styles from "../styles/NewFormStyles";
 
 function NewForm(props) {
-    const {
-        toggleActive,
-        tasks, setTasks,
-        listName, setListName,
-        todoList, setTodoList,
-        allList, setAllList,
-        classes
-    } = props;
+    const { classes, allList, setAllList } = props;
     const [isDone, toggleIsDone] = useState(false);
     const [taskName, setTaskName, resetTaskName] = useInputState("");
     const [isAlertTask, toggleAlertTask] = useToggleState(false);
     const [isAlertListName, toggleAlertListName] = useToggleState(false);
+    const {
+        todoList, setTodoList,
+        tasks, setTasks,
+        listName, setListName, resetListName,
+        toggleActive,
+    } = useContext(TodoListContext);
 
     const addTask = () => {
         if (taskName.length > 0) {
@@ -50,23 +50,6 @@ function NewForm(props) {
         toggleActive();
     };
 
-    // const listNameAlert = () => {
-    //     if (listName.length > 0) {
-    //         setTodoList({ ...todoList, name: listName });
-    //     } else {
-    //         toggleAlertListName();
-    //     };
-    // };
-
-    const handleRes = (res) => {
-        const name = res.data.name
-        const id = res.data.id
-        const published = res.data.published_at
-        const task = res.data.task
-
-        setAllList([...allList, { name, task, id, published }]);
-    };
-
     const handleSave = async () => {
         if (listName.length > 0) {
             setTodoList({ ...todoList, name: listName });
@@ -82,26 +65,30 @@ function NewForm(props) {
                 }
             });
             handleRes(res);
-
-            toggleActive();
-            cancelTasks();
+            handleCancelList();
+            resetListName();
         } else {
             toggleAlertListName();
         };
+    };
+
+    const handleRes = (res) => {
+        const name = res.data.name
+        const id = res.data.id
+        const published = res.data.published_at
+        const task = res.data.task
+
+        setAllList([...allList, { name, task, id, published }]);
     };
 
     return (
         <div>
             <div style={{ width: "100vw" }}>
                 {isAlertTask && (
-                    <Alert severity="error"
-                        onClose={toggleAlertTask} > Please enter a task
-                    </Alert >
+                    <Alert severity="error" onClose={toggleAlertTask}>Please enter a task</Alert >
                 )}
                 {isAlertListName && (
-                    <Alert severity="error"
-                        onClose={toggleAlertListName} > Please enter a list name
-                    </Alert >
+                    <Alert severity="error" onClose={toggleAlertListName}>Please enter a list name</Alert >
                 )}
             </div>
             <Dialog open={true} style={{ marginBottom: "15rem", height: "100vh" }}>
@@ -123,11 +110,11 @@ function NewForm(props) {
                                 <Task {...task} key={i} />
                             ))}
                         </div>
-                        <div>
+                        <section>
                             <Checkbox
                                 tabIndex={-1}
                                 checked={isDone}
-                                onClick={toggleIsDone}
+                                onClick={() => toggleIsDone(!isDone)}
                                 className={classes.checkbox}
                             />
                             <input
@@ -138,16 +125,12 @@ function NewForm(props) {
                                 onChange={setTaskName}
                                 className={classes.taskInput}
                             />
-                        </div>
+                        </section>
                         <div className={classes.buttonBox}>
-                            <Button variant="contained" color="secondary"
-                                onClick={cancelTasks} className={classes.cancelBtn}
-                            >
+                            <Button variant="contained" color="secondary" onClick={cancelTasks} className={classes.cancelBtn}>
                                 Cancel
                             </Button>
-                            <Button variant="contained" color="primary"
-                                onClick={addTask} className={classes.addBtn}
-                            >
+                            <Button variant="contained" onClick={addTask} className={classes.addBtn}>
                                 ADD
                             </Button>
                         </div>
@@ -155,9 +138,7 @@ function NewForm(props) {
                             <Link to="/lists" onClick={handleCancelList} className={classes.cancelBtn2}>
                                 Cancel
                             </Link>
-                            <Button variant="contained" color="primary"
-                                onClick={handleSave} className={classes.saveBtn}
-                            >
+                            <Button variant="contained" onClick={handleSave} className={classes.saveBtn}>
                                 Save
                             </Button>
                         </div>

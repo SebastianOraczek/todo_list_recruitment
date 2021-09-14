@@ -23,7 +23,6 @@ function Register(props) {
 
         if (password && password === repPassword) {
             const user = { username, email, password };
-            console.log(user);
 
             const url = "https://recruitment.ultimate.systems/auth/local/register";
             const res = await fetch(url, {
@@ -31,7 +30,6 @@ function Register(props) {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(user)
             });
-            console.log(res);
 
             res.status === 200
                 ? history.push("/login")
@@ -49,8 +47,8 @@ function Register(props) {
     return (
         <div>
             {isAlert && (
-                <Alert severity="error"
-                    onClose={toggle}>Something went wrong
+                <Alert severity="error" onClose={toggle}>
+                    Something went wrong
                 </Alert>
             )}
             <Grid container justifyContent="center" alignItems="center">
@@ -102,7 +100,9 @@ function Register(props) {
                             />
                         </div>
                         <div className={classes.buttonBox}>
-                            <Button variant="contained" type="submit" className={classes.button}>Create</Button>
+                            <Button variant="contained" type="submit" className={classes.button}>
+                                Create
+                            </Button>
                         </div>
                     </form>
                 </Paper>

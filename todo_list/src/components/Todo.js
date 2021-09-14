@@ -5,13 +5,14 @@ import { withStyles } from '@material-ui/core/styles';
 import styles from "../styles/TodoStyles";
 
 function Todo(props) {
-    const { name, published_at, id, task, classes } = props;
+    const { name, id, task, classes, published } = props;
 
-    const date = published_at.substr(0, 10).split("-").reverse().join("-");
+    // Przekształcenie daty na DD-MM-RRRR
+    const date = published.substr(0, 10).split("-").reverse().join("-");
+
+    // Liczba zadań zrobiony oraz niezrobionych
     const completed = task.filter(t => t.isDone === true).length;
     const uncompleted = task.filter(t => t.isDone === false).length;
-
-    console.log(date)
 
     return (
         <Link to={`/lists/${id}`} className={classes.container}>
@@ -23,7 +24,7 @@ function Todo(props) {
                     <p className={classes.create}>Created at: {date} </p>
                 </ListItemText>
                 <ListItemText>
-                    <p className={classes.complete}>Completed {completed} Uncompleted at: {uncompleted} All: {task.length}</p>
+                    <p className={classes.complete}>Completed: {completed} Uncompleted at: {uncompleted} All: {task.length}</p>
                 </ListItemText>
             </ListItem>
         </Link>

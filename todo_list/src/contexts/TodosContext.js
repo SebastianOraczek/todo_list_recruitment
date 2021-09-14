@@ -10,23 +10,21 @@ export const JwtContext = createContext();
 export function TodosProvider(props) {
     // Stany dla komponentu TodoList, które częściowo przekazywane są do komponentu NewForm
 
-    // Jedna lista zadań
+    // Podstawowa lista zadań
     const [todoList, setTodoList] = useState({ name: "", task: [] });
     // Zadania dodawane podczas tworzenia listy
     const [tasks, setTasks] = useState([]);
     // Ustawienie nazwy listy
-    const [listName, setListName] = useInputState("");
+    const [listName, setListName, resetListName] = useInputState("");
     // Aktywacja formularza do tworzenia listy
     const [isActive, toggleActive] = useToggleState(false);
-    const [listElement, setListElement] = useState({});
 
     return (
         <TodoListContext.Provider value={{
             todoList, setTodoList,
             tasks, setTasks,
-            listName, setListName,
-            isActive, toggleActive,
-            listElement, setListElement,
+            listName, setListName, resetListName,
+            isActive, toggleActive
         }}>
             {props.children}
         </TodoListContext.Provider>

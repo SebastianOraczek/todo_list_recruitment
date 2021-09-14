@@ -24,9 +24,9 @@ function TodoElement(props) {
     const [isDone, setIsDone] = useState(false);
 
     useEffect(() => {
-        return () => {
-            const jwt = window.localStorage.getItem("jwt");
-            const url = `https://recruitment.ultimate.systems/to-do-lists/${id}`;
+        const jwt = window.localStorage.getItem("jwt");
+        const url = `https://recruitment.ultimate.systems/to-do-lists/${id}`;
+        function fetchData() {
             axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${jwt}`,
@@ -38,8 +38,9 @@ function TodoElement(props) {
                     setTasks([...res.data.task])
                 })
                 .catch(err => console.log(err))
-        }
-    }, []);
+        };
+        fetchData();
+    });
 
     const saveList = async () => {
         const name = listName;
@@ -117,14 +118,10 @@ function TodoElement(props) {
                         />
                     </div>
                     <div className={classes.buttonBox}>
-                        <Button variant="contained" color="secondary"
-                            className={classes.cancelBtn} onClick={cancel}
-                        >
+                        <Button variant="contained" color="secondary" className={classes.cancelBtn} onClick={cancel}>
                             Cancel
                         </Button>
-                        <Button variant="contained" color="primary"
-                            className={classes.addBtn} onClick={addTask}
-                        >
+                        <Button variant="contained" color="primary" className={classes.addBtn} onClick={addTask}>
                             ADD
                         </Button>
                     </div>
@@ -132,14 +129,10 @@ function TodoElement(props) {
                         <Link to="/lists" className={classes.cancelBtn2}>
                             Cancel
                         </Link>
-                        <Button variant="contained" color="secondary"
-                            className={classes.deleteBtn} onClick={deleteList}
-                        >
+                        <Button variant="contained" color="secondary" className={classes.deleteBtn} onClick={deleteList}>
                             Delete List
                         </Button>
-                        <Button variant="contained"
-                            className={classes.saveBtn} onClick={saveList}
-                        >
+                        <Button variant="contained" className={classes.saveBtn} onClick={saveList}>
                             Save
                         </Button>
                     </div>

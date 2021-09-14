@@ -15,7 +15,7 @@ function TodoApp() {
                 <Route
                     exact
                     path="/"
-                    render={() => <Login />}
+                    render={(routeProps) => <Login {...routeProps} />}
                 />
                 <Route
                     exact

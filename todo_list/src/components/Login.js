@@ -12,11 +12,11 @@ import styles from "../styles/LoginStyles";
 
 function Login(props) {
     const { history, classes } = props;
-
     const [identifier, setIdentifier, resetIdentifier] = useInputState("");
     const [password, setPassword, resetPassword] = useInputState("");
     const [isAlert, toggle] = useToggleState(false);
 
+    // Powstaje błąd --> "Can't perform a React state update on an unmounted component...""
     const handleSubmit = async (evt) => {
         evt.preventDefault();
         const user = { identifier, password };
@@ -26,10 +26,10 @@ function Login(props) {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)
-        });
+        })
 
         const promiseObj = await res.json();
-        await window.localStorage.setItem("jwt", promiseObj.jwt)
+        await window.localStorage.setItem("jwt", promiseObj.jwt);
 
         if (res.status === 200) {
             window.localStorage.setItem("user", JSON.stringify(user));
@@ -44,8 +44,8 @@ function Login(props) {
     return (
         <div>
             {isAlert && (
-                <Alert severity="error"
-                    onClose={toggle} > Incorrect login or password
+                <Alert severity="error" onClose={toggle}>
+                    Incorrect login or password
                 </Alert >
             )}
             <Grid container justifyContent="center" alignItems="center">
@@ -55,10 +55,11 @@ function Login(props) {
                         <div className={classes.inputBox}>
                             <input
                                 type="text"
+                                placeholder="Email or Username"
+                                name="Email or Username"
                                 autoFocus
                                 value={identifier}
                                 onChange={setIdentifier}
-                                placeholder="Email or Username"
                                 className={classes.input}
                             />
                         </div>
@@ -66,18 +67,23 @@ function Login(props) {
                             <input
                                 type="Password"
                                 placeholder="Password"
+                                name="Password"
                                 className={classes.input}
                                 value={password}
                                 onChange={setPassword}
                             />
                         </div>
                         <div className={classes.buttonBox}>
-                            <Button variant="contained" type="submit" className={classes.button}>Login</Button>
+                            <Button variant="contained" type="submit" className={classes.button}>
+                                Login
+                            </Button>
                         </div>
                     </form>
                     <span className={classes.span}>or</span>
                     <div className={classes.linkBox}>
-                        <Link to="/register" className={classes.link}>Create an new account</Link>
+                        <Link to="/register" className={classes.link}>
+                            Create an new account
+                        </Link>
                     </div>
                 </Paper >
             </Grid>
