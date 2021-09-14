@@ -28,6 +28,7 @@ function TodoList(props) {
                     setTodoList={setTodoList}
                     tasks={tasks}
                     setTasks={setTasks}
+                    setListName={setListName}
                     listName={listName}
                     setListElement={setListElement}
                     setTodos={setTodos}

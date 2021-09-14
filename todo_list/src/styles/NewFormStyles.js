@@ -1,7 +1,7 @@
 const styles = {
     container: {
         backgroundColor: "#2b2c2c",
-        width: "400px",
+        width: "450px",
         marginTop: "2rem",
     },
     listInputBox: {
@@ -18,7 +18,7 @@ const styles = {
     divider: {
         backgroundColor: "#faa307",
         height: "0.13rem",
-        margin: "0.2rem 0.8rem",
+        margin: "0.7rem 0.8rem",
         borderRadius: "20px"
     },
     taskInput: {

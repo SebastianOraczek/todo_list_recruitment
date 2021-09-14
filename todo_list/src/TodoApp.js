@@ -5,7 +5,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import TodoList from "./components/TodoList";
-import Todo from "./components/Todo";
+import TodoElement from "./components/TodoElement";
 
 function TodoApp() {
     return (
@@ -35,8 +35,8 @@ function TodoApp() {
                 />
                 <Route
                     exact
-                    path="lists/:id"
-                    render={(routeProps) => <Todo {...routeProps} />}
+                    path="/lists/:id"
+                    render={(routeProps) => <TodoElement {...routeProps} />}
                 />
             </Switch>
         </div>

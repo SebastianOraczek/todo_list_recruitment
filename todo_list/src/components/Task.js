@@ -1,25 +1,30 @@
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItem from "@material-ui/core/ListItem";
-import Checkbox from '@material-ui/core/Checkbox';
-
 import useToggleState from "../hooks/useToggleState";
 
+import ListItem from "@material-ui/core/ListItem";
+import Checkbox from '@material-ui/core/Checkbox';
+import { withStyles } from "@material-ui/styles";
+import styles from "../styles/TaskStyles";
+
 function Task(props) {
-    const { name, isDone } = props;
+    const { name, isDone, classes } = props;
     const [taskIsDone, toggleTaskIsDone] = useToggleState(isDone);
 
     return (
-        <ListItem style={{ height: "64px" }}>
+        <ListItem className={classes.box}>
             <Checkbox
                 tabIndex={-1}
                 checked={taskIsDone}
                 onClick={toggleTaskIsDone}
+                className={classes.checkbox}
             />
-            <ListItemText>
-                {name}
-            </ListItemText>
+            <input
+                type="text"
+                name="task"
+                value={name}
+                className={classes.taskInput}
+            />
         </ListItem>
     );
 };
 
-export default Task;
+export default withStyles(styles)(Task);

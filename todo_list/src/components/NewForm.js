@@ -30,8 +30,6 @@ function NewForm(props) {
     const [isAlertTask, toggleAlertTask] = useToggleState(false);
     const [isAlertListName, toggleAlertListName] = useToggleState(false);
 
-    // Nie zapisuje się pierwsze zadnie
-    // console.log(todoList);
 
     const addTask = () => {
         if (taskName.length) {
@@ -118,20 +116,27 @@ function NewForm(props) {
                             />
                         </div>
                         <Divider className={classes.divider} />
-                        <Checkbox
-                            tabIndex={-1}
-                            checked={isDone}
-                            onClick={toggleIsDone}
-                            className={classes.checkbox}
-                        />
-                        <input
-                            type="text"
-                            placeholder="Task name"
-                            name="Task name"
-                            value={taskName}
-                            onChange={setTaskName}
-                            className={classes.taskInput}
-                        />
+                        <div>
+                            {tasks.map((task, i) => (
+                                <Task {...task} key={i} />
+                            ))}
+                        </div>
+                        <div>
+                            <Checkbox
+                                tabIndex={-1}
+                                checked={isDone}
+                                onClick={toggleIsDone}
+                                className={classes.checkbox}
+                            />
+                            <input
+                                type="text"
+                                placeholder="Task name"
+                                name="Task name"
+                                value={taskName}
+                                onChange={setTaskName}
+                                className={classes.taskInput}
+                            />
+                        </div>
                         <div className={classes.buttonBox}>
                             <Button variant="contained" color="secondary"
                                 onClick={cancelTasks} className={classes.cancelBtn}
@@ -143,11 +148,6 @@ function NewForm(props) {
                             >
                                 ADD
                             </Button>
-                        </div>
-                        <div>
-                            {tasks.map((task, i) => (
-                                <Task {...task} key={i} />
-                            ))}
                         </div>
                         <div className={classes.buttonBox2}>
                             <Link to="/lists" onClick={handleCancelList} className={classes.cancelBtn2}>
