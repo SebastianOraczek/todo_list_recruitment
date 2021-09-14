@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 import Task from "./Task";
+import { TodoListContext } from "../contexts/TodosContext";
 
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -16,26 +17,13 @@ import styles from "../styles/NewFormStyles";
 function TodoElement(props) {
     const { classes } = props;
     const { id } = props.match.params;
-    const [listName, setListName] = useState("");
-    const [tasks, setTasks] = useState([]);
 
-    useEffect(() => {
-        const url = `https://recruitment.ultimate.systems/to-do-lists/${id}`;
-        const jwt = window.localStorage.getItem("jwt");
-        axios.get(url, {
-            headers: {
-                Authorization: `Bearer ${jwt}`,
-                "Content-Type": "application/json",
-            }
-        })
-            .then(res => handleRes(res))
-            .catch(err => console.log(err))
-    }, []);
+    const {
+        tasks,
+        listName, setListName,
+    } = useContext(TodoListContext);
 
-    const handleRes = (res) => {
-        setListName(res.data.name);
-        setTasks(res.data.task);
-    };
+    console.log(tasks)
 
     return (
         <Grid container justifyContent="center" alignItems="center">
@@ -45,7 +33,7 @@ function TodoElement(props) {
                         <input
                             type="text"
                             name="List name"
-                            value={listName}
+                            defaultValue={listName}
                             className={classes.listInput}
                         />
                     </div>

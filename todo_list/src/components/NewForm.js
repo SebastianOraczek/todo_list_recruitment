@@ -1,4 +1,4 @@
-import { memo } from "react"
+import { memo, useContext } from "react"
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -22,7 +22,7 @@ function NewForm(props) {
         tasks, setTasks,
         listName, setListName,
         todoList, setTodoList,
-        todos, setTodos,
+        allList, setAllList,
         classes
     } = props;
     const [isDone, toggleIsDone] = useToggleState(false);
@@ -30,9 +30,11 @@ function NewForm(props) {
     const [isAlertTask, toggleAlertTask] = useToggleState(false);
     const [isAlertListName, toggleAlertListName] = useToggleState(false);
 
+    // Nie zapisuje się pierwsze zadnie
+    // console.log(todoList);
 
     const addTask = () => {
-        if (taskName.length) {
+        if (taskName) {
             const name = taskName;
             setTasks([...tasks, { name, isDone }]);
             setTodoList({ task: [...todoList.task, ...tasks] });
@@ -65,7 +67,7 @@ function NewForm(props) {
         const published = res.data.published_at
         const task = res.data.task
 
-        setTodos([...todos, { name, task, id, published }]);
+        setAllList([...allList, { name, task, id, published }]);
     };
 
     const handleSave = async () => {
@@ -88,6 +90,7 @@ function NewForm(props) {
         cancelTasks();
     };
 
+    console.log(allList)
     return (
         <div>
             <div style={{ width: "100vw" }}>
@@ -116,27 +119,20 @@ function NewForm(props) {
                             />
                         </div>
                         <Divider className={classes.divider} />
-                        <div>
-                            {tasks.map((task, i) => (
-                                <Task {...task} key={i} />
-                            ))}
-                        </div>
-                        <div>
-                            <Checkbox
-                                tabIndex={-1}
-                                checked={isDone}
-                                onClick={toggleIsDone}
-                                className={classes.checkbox}
-                            />
-                            <input
-                                type="text"
-                                placeholder="Task name"
-                                name="Task name"
-                                value={taskName}
-                                onChange={setTaskName}
-                                className={classes.taskInput}
-                            />
-                        </div>
+                        <Checkbox
+                            tabIndex={-1}
+                            checked={isDone}
+                            onClick={toggleIsDone}
+                            className={classes.checkbox}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Task name"
+                            name="Task name"
+                            value={taskName}
+                            onChange={setTaskName}
+                            className={classes.taskInput}
+                        />
                         <div className={classes.buttonBox}>
                             <Button variant="contained" color="secondary"
                                 onClick={cancelTasks} className={classes.cancelBtn}
@@ -148,6 +144,11 @@ function NewForm(props) {
                             >
                                 ADD
                             </Button>
+                        </div>
+                        <div>
+                            {tasks.map((task, i) => (
+                                <Task {...task} key={i} />
+                            ))}
                         </div>
                         <div className={classes.buttonBox2}>
                             <Link to="/lists" onClick={handleCancelList} className={classes.cancelBtn2}>

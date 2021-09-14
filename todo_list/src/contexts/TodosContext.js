@@ -23,11 +23,14 @@ export function TodosProvider(props) {
     const [isAlertRegister, toggleAlertRegister] = useToggleState(false);
 
     // Stany dla komponentu TodoList, które częściowo przekazywane są do komponentu NewForm
+    // Jedna lista zadań
     const [todoList, setTodoList] = useState({ name: "", task: [] });
+    // Zadania dodawane podczas tworzenia listy
     const [tasks, setTasks] = useState([]);
+    // Ustawienie nazwy listy
     const [listName, setListName] = useInputState("");
-    const [todos, setTodos] = useState([]);
-    const [isActive, toggleActive] = useToggleState(true);
+    // Aktywacja formularza do tworzenia listy
+    const [isActive, toggleActive] = useToggleState(false);
     const [listElement, setListElement] = useState({});
 
     return (
@@ -48,8 +51,7 @@ export function TodosProvider(props) {
                     tasks, setTasks,
                     listName, setListName,
                     isActive, toggleActive,
-                    todos, setTodos,
-                    listElement, setListElement
+                    listElement, setListElement,
                 }}>
                     {props.children}
                 </TodoListContext.Provider>

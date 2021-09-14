@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
 
 import Todo from "./Todo";
 import NewForm from "./NewForm";
@@ -15,9 +16,22 @@ function TodoList(props) {
         tasks, setTasks,
         listName, setListName,
         isActive, toggleActive,
-        todos, setTodos,
         setListElement,
     } = useContext(TodoListContext);
+    const [allList, setAllList] = useState([]);
+
+    useEffect(() => {
+        const jwt = window.localStorage.getItem("jwt");
+        const url = "https://recruitment.ultimate.systems/to-do-lists";
+        axios.get(url, {
+            headers: {
+                Authorization: `Bearer ${jwt}`,
+                "Content-Type": "application/json"
+            }
+        })
+            .then(res => setAllList(res.data)).
+            catch(err => console.log(err))
+    }, []);
 
     return (
         <Grid container justifyContent="center" alignItems="center">
@@ -31,15 +45,15 @@ function TodoList(props) {
                     setListName={setListName}
                     listName={listName}
                     setListElement={setListElement}
-                    setTodos={setTodos}
-                    todos={todos}
+                    allList={allList}
+                    setAllList={setAllList}
                 />
                 : (
                     <Paper>
                         <Grid item>
                             <List>
-                                {todos.map((todo, i) => (
-                                    <Todo key={i} {...todo} />
+                                {allList.map((item, i) => (
+                                    <Todo key={i} {...item} />
                                 ))}
                             </List>
                             <Button variant="contained" color="primary" onClick={toggleActive}>ADD</Button>
