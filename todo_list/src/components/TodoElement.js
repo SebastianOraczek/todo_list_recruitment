@@ -9,6 +9,8 @@ import Button from '@material-ui/core/Button';
 import Grid from "@material-ui/core/Grid";
 import Checkbox from '@material-ui/core/Checkbox';
 import Divider from '@material-ui/core/Divider';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
 import { withStyles } from '@material-ui/core/styles';
 import styles from "../styles/NewFormStyles";
 
@@ -64,8 +66,8 @@ function TodoElement(props) {
     };
 
     return (
-        <Grid container justifyContent="center" alignItems="center">
-            <Paper className={classes.container}>
+        <Dialog open={true} style={{ marginBottom: "15rem", height: "100vh" }}>
+            <DialogContent className={classes.container}>
                 <form>
                     <div className={classes.listInputBox}>
                         <input
@@ -122,9 +124,9 @@ function TodoElement(props) {
                         </Button>
                     </div>
                 </form>
-            </Paper>
-        </Grid >
-    )
+            </DialogContent>
+        </Dialog>
+    );
 };
 
 export default withStyles(styles)(TodoElement);

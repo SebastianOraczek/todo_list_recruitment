@@ -9,8 +9,7 @@ import TodoElement from "./components/TodoElement";
 
 function TodoApp() {
     return (
-        <div>
-            {/* style={{ background: "rgba(0,0,0,0.9)", height: "100vh" }} */}
+        <div style={{ background: "rgba(0,0,0,0.9)", minHeight: "100vh", height: "100%" }} >
             <Navbar />
             <Switch>
                 <Route
@@ -39,7 +38,7 @@ function TodoApp() {
                     render={(routeProps) => <TodoElement {...routeProps} />}
                 />
             </Switch>
-        </div>
+        </ div>
     );
 };
 

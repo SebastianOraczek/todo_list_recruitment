@@ -6,13 +6,12 @@ import Task from "./Task";
 import useInputState from '../hooks/useInputState';
 import useToggleState from "../hooks/useToggleState";
 
-import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import Grid from "@material-ui/core/Grid";
 import Checkbox from '@material-ui/core/Checkbox';
 import Alert from '@material-ui/lab/Alert';
 import Divider from '@material-ui/core/Divider';
-
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
 import { withStyles } from '@material-ui/core/styles';
 import styles from "../styles/NewFormStyles";
 
@@ -31,7 +30,7 @@ function NewForm(props) {
     const [isAlertListName, toggleAlertListName] = useToggleState(false);
 
     const addTask = () => {
-        if (taskName) {
+        if (taskName.length > 1) {
             const name = taskName;
             setTasks([...tasks, { name, isDone }]);
             setTodoList({ task: [...todoList.task, ...tasks] });
@@ -100,8 +99,8 @@ function NewForm(props) {
                     </Alert >
                 )}
             </div>
-            <Grid container justifyContent="center" alignItems="center">
-                <Paper className={classes.container}>
+            <Dialog open={true} style={{ marginBottom: "15rem", height: "100vh" }}>
+                <DialogContent className={classes.container}>
                     <form>
                         <div className={classes.listInputBox}>
                             <input
@@ -158,8 +157,8 @@ function NewForm(props) {
                             </Button>
                         </div>
                     </form>
-                </Paper>
-            </Grid>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 };

@@ -2,7 +2,6 @@ const styles = {
     container: {
         backgroundColor: "#2b2c2c",
         width: "450px",
-        marginTop: "2rem",
     },
     listInputBox: {
         display: "flex",
@@ -53,7 +52,7 @@ const styles = {
     buttonBox2: {
         display: "flex",
         justifyContent: "space-between",
-        marginTop: "1rem"
+        marginTop: "2rem"
     },
     saveBtn: {
         marginRight: "0.8rem",

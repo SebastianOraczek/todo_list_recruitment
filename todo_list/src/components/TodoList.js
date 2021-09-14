@@ -6,11 +6,15 @@ import NewForm from "./NewForm";
 import { TodoListContext } from "../contexts/TodosContext";
 
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { withStyles } from '@material-ui/core/styles';
+import styles from "../styles/TodoListStyles";
 
 function TodoList(props) {
+    const { classes } = props;
     const {
         todoList, setTodoList,
         tasks, setTasks,
@@ -33,6 +37,8 @@ function TodoList(props) {
             .catch(err => console.log(err))
     }, []);
 
+    console.log(allList[0].published_at)
+
     return (
         <Grid container justifyContent="center" alignItems="center">
             {isActive
@@ -49,20 +55,24 @@ function TodoList(props) {
                     setAllList={setAllList}
                 />
                 : (
-                    <Paper>
-                        <Grid item>
+                    <Grid item>
+                        <Paper className={classes.container}>
                             <List>
                                 {allList.map((item, i) => (
                                     <Todo key={i} {...item} />
                                 ))}
                             </List>
-                            <Button variant="contained" color="primary" onClick={toggleActive}>ADD</Button>
-                        </Grid>
-                    </Paper>
+                            <div className={classes.addBtnBox}>
+                                <IconButton>
+                                    <AddCircleIcon onClick={toggleActive} className={classes.addBtn} />
+                                </IconButton>
+                            </div>
+                        </Paper>
+                    </Grid>
                 )
             }
-        </Grid>
+        </Grid >
     );
 };
 
-export default TodoList;
+export default withStyles(styles)(TodoList);
