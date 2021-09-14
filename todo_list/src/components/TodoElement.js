@@ -4,7 +4,6 @@ import axios from "axios";
 
 import Task from "./Task";
 import useInputState from "../hooks/useInputState";
-import useToggleState from "../hooks/useToggleState";
 
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -25,22 +24,22 @@ function TodoElement(props) {
     const [isDone, setIsDone] = useState(false);
 
     useEffect(() => {
-        const jwt = window.localStorage.getItem("jwt");
-        const url = `https://recruitment.ultimate.systems/to-do-lists/${id}`;
-        axios.get(url, {
-            headers: {
-                Authorization: `Bearer ${jwt}`,
-                "Content-Type": "application/json"
-            }
-        })
-            .then(res => handleResGET(res))
-            .catch(err => console.log(err))
+        return () => {
+            const jwt = window.localStorage.getItem("jwt");
+            const url = `https://recruitment.ultimate.systems/to-do-lists/${id}`;
+            axios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(res => {
+                    setListName(res.data.name)
+                    setTasks([...res.data.task])
+                })
+                .catch(err => console.log(err))
+        }
     }, []);
-
-    const handleResGET = (res) => {
-        setListName(res.data.name)
-        setTasks([...res.data.task]);
-    };
 
     const saveList = async () => {
         const name = listName;

@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import styles from "../styles/TaskStyles";
 
 function Task(props) {
-    const { name, isDone, classes, id, editTask } = props;
+    const { name, isDone, classes } = props;
     const [taskIsDone, toggleTaskIsDone] = useToggleState(isDone);
 
     return (

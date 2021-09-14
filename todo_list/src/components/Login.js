@@ -1,6 +1,7 @@
-import { useContext } from "react";
-import { LoginContext } from "../contexts/TodosContext";
 import { Link } from "react-router-dom";
+
+import useInputState from "../hooks/useInputState";
+import useToggleState from "../hooks/useToggleState";
 
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -11,12 +12,10 @@ import styles from "../styles/LoginStyles";
 
 function Login(props) {
     const { history, classes } = props;
-    const {
-        identifier, setIdentifier,
-        password, setPassword,
-        isAlert, toggle,
-        resetIdentifier, resetPassword,
-    } = useContext(LoginContext);
+
+    const [identifier, setIdentifier, resetIdentifier] = useInputState("");
+    const [password, setPassword, resetPassword] = useInputState("");
+    const [isAlert, toggle] = useToggleState(false);
 
     const handleSubmit = async (evt) => {
         evt.preventDefault();

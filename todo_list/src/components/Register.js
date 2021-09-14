@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { RegisterContext } from "../contexts/TodosContext";
+import useInputState from "../hooks/useInputState";
+import useToggleState from '../hooks/useToggleState';
 
 import Paper from '@material-ui/core/Paper';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -12,19 +12,18 @@ import styles from "../styles/RegisterStyles";
 
 function Register(props) {
     const { history, classes } = props;
-    const {
-        username, changeUsername,
-        email, changeEmail,
-        passwordRegister, changePasswordRegister,
-        repPassword, changeRepPassword,
-        isAlertRegister, toggleAlertRegister
-    } = useContext(RegisterContext);
+    const [username, changeUsername] = useInputState("");
+    const [email, changeEmail] = useInputState("");
+    const [password, changePassword] = useInputState("");
+    const [repPassword, changeRepPassword] = useInputState("");
+    const [isAlert, toggle] = useToggleState(false);
 
     const handleSubmit = async (evt) => {
         evt.preventDefault();
 
-        if (passwordRegister && passwordRegister === repPassword) {
-            const user = { username, email, passwordRegister };
+        if (password && password === repPassword) {
+            const user = { username, email, password };
+            console.log(user);
 
             const url = "https://recruitment.ultimate.systems/auth/local/register";
             const res = await fetch(url, {
@@ -32,15 +31,14 @@ function Register(props) {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(user)
             });
+            console.log(res);
 
-            if (res.status === 200) {
-                history.push("/login");
-            } else {
-                toggleAlertRegister();
-            }
+            res.status === 200
+                ? history.push("/login")
+                : toggle();
 
         } else {
-            toggleAlertRegister();
+            toggle();
         };
     };
 
@@ -50,9 +48,9 @@ function Register(props) {
 
     return (
         <div>
-            {isAlertRegister && (
+            {isAlert && (
                 <Alert severity="error"
-                    onClose={toggleAlertRegister}>Something went wrong
+                    onClose={toggle}>Something went wrong
                 </Alert>
             )}
             <Grid container justifyContent="center" alignItems="center">
@@ -88,8 +86,8 @@ function Register(props) {
                                 type="password"
                                 placeholder="Password"
                                 name="Password"
-                                value={passwordRegister}
-                                onChange={changePasswordRegister}
+                                value={password}
+                                onChange={changePassword}
                                 className={classes.input}
                             />
                         </div>
