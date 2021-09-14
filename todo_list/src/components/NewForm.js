@@ -1,11 +1,10 @@
-import { memo, useContext } from "react"
+import { memo } from "react"
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 import Task from "./Task";
 import useInputState from '../hooks/useInputState';
 import useToggleState from "../hooks/useToggleState";
-import { JwtContext } from "../contexts/TodosContext";
 
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -23,11 +22,9 @@ function NewForm(props) {
         tasks, setTasks,
         listName, setListName,
         todoList, setTodoList,
-        setListElement,
         todos, setTodos,
         classes
     } = props;
-    const { jwt } = useContext(JwtContext);
     const [isDone, toggleIsDone] = useToggleState(false);
     const [taskName, setTaskName, resetTaskName] = useInputState("");
     const [isAlertTask, toggleAlertTask] = useToggleState(false);
@@ -37,7 +34,7 @@ function NewForm(props) {
     // console.log(todoList);
 
     const addTask = () => {
-        if (taskName) {
+        if (taskName.length) {
             const name = taskName;
             setTasks([...tasks, { name, isDone }]);
             setTodoList({ task: [...todoList.task, ...tasks] });
@@ -78,6 +75,7 @@ function NewForm(props) {
 
         const name = listName;
         const task = tasks;
+        const jwt = window.localStorage.getItem("jwt");
         const url = "https://recruitment.ultimate.systems/to-do-lists";
         const res = await axios.post(url, { name, task }, {
             headers: {

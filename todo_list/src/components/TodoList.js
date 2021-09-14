@@ -19,8 +19,6 @@ function TodoList(props) {
         setListElement,
     } = useContext(TodoListContext);
 
-
-    console.log(todos)
     return (
         <Grid container justifyContent="center" alignItems="center">
             {isActive
@@ -31,7 +29,6 @@ function TodoList(props) {
                     tasks={tasks}
                     setTasks={setTasks}
                     listName={listName}
-                    setListName={setListName}
                     setListElement={setListElement}
                     setTodos={setTodos}
                     todos={todos}
@@ -41,7 +38,7 @@ function TodoList(props) {
                         <Grid item>
                             <List>
                                 {todos.map((todo, i) => (
-                                    <Todo {...todo} key={i} />
+                                    <Todo key={i} {...todo} />
                                 ))}
                             </List>
                             <Button variant="contained" color="primary" onClick={toggleActive}>ADD</Button>

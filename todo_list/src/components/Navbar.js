@@ -9,19 +9,20 @@ function Navbar(props) {
     const { classes, history } = props;
 
     const logout = () => {
-        window.localStorage.setItem("user", "")
+        window.localStorage.clear();
         history.push("/login");
     };
-
+    console.log(window.localStorage)
     return (
         <div>
             <p className={classes.text}>ToDo-List</p>
-            {window.localStorage && window.localStorage.user.length > 1 &&
+            {window.localStorage.length >= 1 &&
                 (
                     <IconButton onClick={logout} className={classes.logout}>
                         <ExitToAppIcon className={classes.logoutIcon} />
                     </IconButton>
-                )}
+                )
+            }
         </div>
     );
 };

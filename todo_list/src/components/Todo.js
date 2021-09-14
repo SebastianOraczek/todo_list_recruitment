@@ -1,23 +1,23 @@
-import { useEffect, useContext } from "react";
-import axios from "axios";
-
-import { JwtContext } from "../contexts/TodosContext";
-
+import { Link } from "react-router-dom";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 
 function Todo(props) {
-    const { name } = props;
-    const { jwt } = useContext(JwtContext);
+    const { name, task, published } = props;
 
-    useEffect(() => {
-
-    })
+    const date = published.substr(0, 10).split("-").reverse().join("-");
+    const completed = task.filter(t => t.isDone === true).length;
+    const uncompleted = task.filter(t => t.isDone === false).length;
 
     return (
-        <ListItem style={{ height: "64px" }}>
-            <ListItemText>{name}</ListItemText>
-        </ListItem>
+        <Link>
+            <ListItem style={{ height: "64px" }}>
+                <ListItemText>{name}</ListItemText>
+                <ListItemText>Created at: {date}</ListItemText>
+                <ListItemText>Completed {completed}</ListItemText>
+                <ListItemText>Uncompleted at: {uncompleted}</ListItemText>
+                <ListItemText>All: {task.length}</ListItemText>
+            </ListItem></Link>
     );
 };
 

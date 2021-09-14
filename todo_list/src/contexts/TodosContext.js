@@ -30,38 +30,30 @@ export function TodosProvider(props) {
     const [isActive, toggleActive] = useToggleState(true);
     const [listElement, setListElement] = useState({});
 
-    // Stan pozwalający na otrzymanie jwt
-    const [jwt, setJwt] = useState("");
-
     return (
-        <JwtContext.Provider value={{
-            jwt, setJwt
-        }}
-        >
-            <LoginContext.Provider value={{
-                identifier, setIdentifier, resetIdentifier,
-                password, setPassword, resetPassword,
-                isAlert, toggle,
+        <LoginContext.Provider value={{
+            identifier, setIdentifier, resetIdentifier,
+            password, setPassword, resetPassword,
+            isAlert, toggle,
+        }}>
+            <RegisterContext.Provider value={{
+                username, changeUsername,
+                email, changeEmail,
+                passwordRegister, changePasswordRegister,
+                repPassword, changeRepPassword,
+                isAlertRegister, toggleAlertRegister
             }}>
-                <RegisterContext.Provider value={{
-                    username, changeUsername,
-                    email, changeEmail,
-                    passwordRegister, changePasswordRegister,
-                    repPassword, changeRepPassword,
-                    isAlertRegister, toggleAlertRegister
+                <TodoListContext.Provider value={{
+                    todoList, setTodoList,
+                    tasks, setTasks,
+                    listName, setListName,
+                    isActive, toggleActive,
+                    todos, setTodos,
+                    listElement, setListElement
                 }}>
-                    <TodoListContext.Provider value={{
-                        todoList, setTodoList,
-                        tasks, setTasks,
-                        listName, setListName,
-                        isActive, toggleActive,
-                        todos, setTodos,
-                        listElement, setListElement
-                    }}>
-                        {props.children}
-                    </TodoListContext.Provider>
-                </RegisterContext.Provider>
-            </LoginContext.Provider>
-        </JwtContext.Provider>
+                    {props.children}
+                </TodoListContext.Provider>
+            </RegisterContext.Provider>
+        </LoginContext.Provider>
     );
 };

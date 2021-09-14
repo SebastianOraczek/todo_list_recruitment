@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { JwtContext, LoginContext } from "../contexts/TodosContext";
+import { LoginContext } from "../contexts/TodosContext";
 import { Link } from "react-router-dom";
 
 import Paper from '@material-ui/core/Paper';
@@ -11,7 +11,6 @@ import styles from "../styles/LoginStyles";
 
 function Login(props) {
     const { history, classes } = props;
-    const { jwt, setJwt } = useContext(JwtContext);
     const {
         identifier, setIdentifier,
         password, setPassword,
@@ -29,11 +28,11 @@ function Login(props) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)
         });
-        const promiseObj = await res.json();
-        setJwt(promiseObj.jwt);
-        console.log(jwt);
 
-        if (res.status === 200 && jwt) {
+        const promiseObj = await res.json();
+        await window.localStorage.setItem("jwt", promiseObj.jwt)
+
+        if (res.status === 200) {
             window.localStorage.setItem("user", JSON.stringify(user));
             history.push("/lists");
             resetIdentifier();
@@ -47,7 +46,7 @@ function Login(props) {
         <div>
             {isAlert && (
                 <Alert severity="error"
-                    onClose={toggle} > Incorrect Login or password
+                    onClose={toggle} > Incorrect login or password
                 </Alert >
             )}
             <Grid container justifyContent="center" alignItems="center">
