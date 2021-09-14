@@ -13,7 +13,7 @@ import { withStyles } from '@material-ui/core/styles';
 import styles from "../styles/NewFormStyles";
 
 function TodoElement(props) {
-    const { classes } = props;
+    const { classes, history } = props;
     const { id } = props.match.params;
 
     const [listName, setListName] = useState("");
@@ -28,13 +28,39 @@ function TodoElement(props) {
                 "Content-Type": "application/json"
             }
         })
-            .then(res => handleRes(res))
+            .then(res => handleResGET(res))
             .catch(err => console.log(err))
     }, []);
 
-    const handleRes = (res) => {
+    const handleResGET = (res) => {
         setListName(res.data.name)
         setTasks([...res.data.task]);
+    };
+
+    const saveList = async () => {
+        const name = listName;
+        const task = tasks;
+        const jwt = window.localStorage.getItem("jwt");
+        const url = `https://recruitment.ultimate.systems/to-do-lists/${id}`;
+        await axios.put(url, { name, task }, {
+            headers: {
+                Authorization: `Bearer ${jwt}`,
+                "Content-Type": "application/json"
+            }
+        });
+        history.push("/lists");
+    };
+
+    const deleteList = async () => {
+        const jwt = window.localStorage.getItem("jwt");
+        const url = `https://recruitment.ultimate.systems/to-do-lists/${id}`;
+        await axios.delete(url, {
+            headers: {
+                Authorization: `Bearer ${jwt}`,
+                "Content-Type": "application/json"
+            }
+        });
+        history.push("/lists");
     };
 
     return (
@@ -84,15 +110,20 @@ function TodoElement(props) {
                         <Link to="/lists" className={classes.cancelBtn2}>
                             Cancel
                         </Link>
-                        <Button variant="contained" color="primary"
-                            className={classes.saveBtn}
+                        <Button variant="contained" color="secondary"
+                            className={classes.deleteBtn} onClick={deleteList}
+                        >
+                            Delete List
+                        </Button>
+                        <Button variant="contained"
+                            className={classes.saveBtn} onClick={saveList}
                         >
                             Save
                         </Button>
                     </div>
                 </form>
             </Paper>
-        </Grid>
+        </Grid >
     )
 };
 

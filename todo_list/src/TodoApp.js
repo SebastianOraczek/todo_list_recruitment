@@ -20,13 +20,13 @@ function TodoApp() {
                 />
                 <Route
                     exact
-                    path="/register"
-                    render={(routeProps) => <Register {...routeProps} />}
+                    path="/login"
+                    render={(routeProps) => <Login {...routeProps} />}
                 />
                 <Route
                     exact
-                    path="/login"
-                    render={(routeProps) => <Login {...routeProps} />}
+                    path="/register"
+                    render={(routeProps) => <Register {...routeProps} />}
                 />
                 <Route
                     exact

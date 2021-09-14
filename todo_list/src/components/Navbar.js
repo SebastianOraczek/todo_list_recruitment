@@ -12,7 +12,6 @@ function Navbar(props) {
         window.localStorage.clear();
         history.push("/login");
     };
-    console.log(window.localStorage)
     return (
         <div>
             <p className={classes.text}>ToDo-List</p>

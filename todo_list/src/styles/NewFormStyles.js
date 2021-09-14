@@ -60,6 +60,7 @@ const styles = {
         backgroundColor: "#faa307",
         padding: "0.4rem 1.8rem ",
         marginBottom: "1rem",
+        color: "white",
         "&:hover": {
             backgroundColor: "#fab610",
         }
@@ -68,10 +69,16 @@ const styles = {
         color: "#faa307",
         textDecoration: "none",
         fontSize: "1.6rem",
-        marginLeft: "3rem",
+        marginLeft: "1rem",
         "&:hover": {
             color: "#fab610",
         }
+    },
+    deleteBtn: {
+        marginRight: "0.8rem",
+        padding: "0.4rem 1.8rem ",
+        marginBottom: "1rem",
+        color: "white",
     }
 };
 

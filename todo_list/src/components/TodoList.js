@@ -29,8 +29,8 @@ function TodoList(props) {
                 "Content-Type": "application/json"
             }
         })
-            .then(res => setAllList(res.data)).
-            catch(err => console.log(err))
+            .then(res => setAllList(res.data))
+            .catch(err => console.log(err))
     }, []);
 
     return (
