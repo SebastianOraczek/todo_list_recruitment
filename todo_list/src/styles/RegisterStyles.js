@@ -22,7 +22,8 @@ const styles = {
         border: "none",
         width: "100%",
         margin: "0.5rem 3rem",
-        height: "20px"
+        height: "20px",
+        outline: "none"
     },
     buttonBox: {
         display: "flex",

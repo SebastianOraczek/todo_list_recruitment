@@ -25,9 +25,9 @@ function Task(props) {
                 value={name}
                 className={classes.taskInput}
             />
-            <IconButton aria-label="Edit">
+            {/* <IconButton aria-label="Edit">
                 <EditIcon />
-            </IconButton>
+            </IconButton> */}
         </ListItem>
     );
 };

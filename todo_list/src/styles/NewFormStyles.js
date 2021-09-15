@@ -12,7 +12,8 @@ const styles = {
         border: "none",
         width: "100%",
         margin: "0.8rem",
-        height: "20px"
+        height: "20px",
+        outline: "none"
     },
     divider: {
         backgroundColor: "#faa307",
@@ -26,7 +27,8 @@ const styles = {
         backgroundColor: "inherit",
         border: "none",
         borderBottom: "1px solid #faa307",
-        width: "85%"
+        width: "85%",
+        outline: "none"
     },
     checkbox: {
         marginTop: "0.3rem",

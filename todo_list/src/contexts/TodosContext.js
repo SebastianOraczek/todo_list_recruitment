@@ -14,13 +14,22 @@ export function TodosProvider(props) {
     const [listName, setListName, resetListName] = useInputState("");
     // Aktywacja formularza do tworzenia listy
     const [isActive, toggleActive] = useToggleState(false);
+    // Wszystkie listy pobrane z serwera
+    const [allList, setAllList] = useState([]);
+    // Stan przechowywujący format daty dodania zadania
+    const [published, setPublished] = useState("");
+    // Stan boolean, zmienia url do żądania (asc, desc)
+    const [isSorted, toggleIsSorted] = useToggleState(false);
 
     return (
         <TodoListContext.Provider value={{
             todoList, setTodoList,
             tasks, setTasks,
             listName, setListName, resetListName,
-            isActive, toggleActive
+            isActive, toggleActive,
+            allList, setAllList,
+            published, setPublished,
+            isSorted, toggleIsSorted
         }}>
             {props.children}
         </TodoListContext.Provider>
