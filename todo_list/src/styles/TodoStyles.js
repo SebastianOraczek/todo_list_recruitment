@@ -5,7 +5,11 @@ const styles = {
         color: "white",
         margin: "1rem",
         backgroundColor: "#2b2c2c",
-        borderRadius: "8px"
+        borderRadius: "8px",
+        transition: "all 0.2s ease-is-out",
+        "&:hover": {
+            backgroundColor: "#333533"
+        }
     },
     item: {
         height: "64px",

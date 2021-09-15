@@ -23,6 +23,8 @@ function TodoElement(props) {
     const [newTask, setNewTask] = useState([]);
     const [isDone, setIsDone] = useState(false);
 
+
+    // React Hook useEffect has a missing dependency...
     useEffect(() => {
         const jwt = window.localStorage.getItem("jwt");
         const url = `https://recruitment.ultimate.systems/to-do-lists/${id}`;
@@ -40,7 +42,7 @@ function TodoElement(props) {
                 .catch(err => console.log(err))
         };
         fetchData();
-    });
+    }, []);
 
     const saveList = async () => {
         const name = listName;

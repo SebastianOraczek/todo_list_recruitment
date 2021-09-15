@@ -16,7 +16,7 @@ function Login(props) {
     const [password, setPassword, resetPassword] = useInputState("");
     const [isAlert, toggle] = useToggleState(false);
 
-    // Powstaje błąd --> "Can't perform a React state update on an unmounted component...""
+    // Powstaje błąd-- > "Can't perform a React state update on an unmounted component..."
     const handleSubmit = async (evt) => {
         evt.preventDefault();
         const user = { identifier, password };
@@ -32,7 +32,7 @@ function Login(props) {
         await window.localStorage.setItem("jwt", promiseObj.jwt);
 
         if (res.status === 200) {
-            window.localStorage.setItem("user", JSON.stringify(user));
+            window.localStorage.setItem("user", JSON.stringify(user.identifier));
             history.push("/lists");
             resetIdentifier();
             resetPassword();
