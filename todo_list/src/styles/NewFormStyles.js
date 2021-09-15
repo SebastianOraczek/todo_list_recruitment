@@ -1,7 +1,7 @@
 const styles = {
     container: {
         backgroundColor: "#2b2c2c",
-        width: "450px",
+        width: "500px",
     },
     listInputBox: {
         display: "flex",
@@ -18,8 +18,8 @@ const styles = {
     divider: {
         backgroundColor: "#faa307",
         height: "0.13rem",
-        margin: "0.7rem 0.8rem",
-        borderRadius: "20px"
+        margin: "0.7rem 1rem",
+        borderRadius: "20px",
     },
     taskInput: {
         marginTop: "1rem",
@@ -27,7 +27,7 @@ const styles = {
         backgroundColor: "inherit",
         border: "none",
         borderBottom: "1px solid #faa307",
-        width: "85%",
+        width: "87.5%",
         outline: "none"
     },
     checkbox: {
@@ -36,6 +36,7 @@ const styles = {
     buttonBox: {
         display: "flex",
         justifyContent: "end",
+        marginTop: "0.6rem"
     },
     addBtn: {
         marginRight: "0.8rem",
@@ -55,7 +56,7 @@ const styles = {
     buttonBox2: {
         display: "flex",
         justifyContent: "space-between",
-        marginTop: "2rem"
+        marginTop: "2.5rem"
     },
     saveBtn: {
         marginRight: "0.8rem",
@@ -71,7 +72,7 @@ const styles = {
         color: "#faa307",
         textDecoration: "none",
         fontSize: "1.6rem",
-        marginLeft: "1rem",
+        marginLeft: "0.9rem",
         "&:hover": {
             color: "#fab610",
         }

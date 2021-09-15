@@ -1,20 +1,24 @@
 const styles = {
     container: {
         backgroundColor: "inherit",
-        width: "650px",
+        width: "800px",
         border: "none",
         boxShadow: "none",
     },
     addBtnBox: {
         position: "fixed",
         right: "26rem",
-        bottom: "1rem",
+        bottom: "2rem",
     },
     addBtn: {
         color: "white",
         fontSize: "4rem",
         backgroundColor: "#faa307",
         borderRadius: "50%",
+        transition: "all 0.3s ease-in-out",
+        "&:hover": {
+            transform: "scale(1.2)"
+        }
     },
     inputsAbove: {
         display: "flex",
@@ -33,7 +37,15 @@ const styles = {
         paddingLeft: "0.5rem",
         border: "none",
         outline: "none",
-        marginLeft: "1rem"
+        marginLeft: "1rem",
+        transition: "all 0.3s ease-in-out",
+        width: "20%",
+        "&:focus": {
+            width: "30%"
+        },
+        "&:hover": {
+            width: "30%"
+        }
     }
 };
 

@@ -23,7 +23,6 @@ function TodoElement(props) {
     const [newTask, setNewTask] = useState([]);
     const [isDone, setIsDone] = useState(false);
 
-
     // React Hook useEffect has a missing dependency...
     useEffect(() => {
         const jwt = window.localStorage.getItem("jwt");
@@ -100,7 +99,7 @@ function TodoElement(props) {
                     <Divider className={classes.divider} />
                     <div>
                         {tasks.map((task, i) => (
-                            <Task key={i} {...task} />
+                            <Task key={i} {...task} tasks={tasks} setTasks={setTasks} />
                         ))}
                     </div>
                     <div>

@@ -4,7 +4,7 @@ const styles = {
         color: "#faa307",
         fontSize: "30px",
         fontFamily: "ZCOOL KuaiLe",
-        padding: "0.4rem 0.8rem",
+        padding: "0.5rem 0.8rem",
         marginTop: "0",
         fontWeight: "400",
         letterSpacing: "1px"
@@ -13,7 +13,7 @@ const styles = {
         position: "absolute",
         top: 0,
         right: "1.5rem",
-        paddingTop: "0.3rem",
+        paddingTop: "0.5rem",
         color: "#faa307",
         transition: "all 0.2s ease-in-out",
         "&:hover": {

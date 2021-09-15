@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import axios from "axios";
 
 import Todo from "./Todo";
@@ -9,9 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from "@material-ui/core/Grid";
-import Alert from "@material-ui/lab/Alert";
 import List from "@material-ui/core/List";
-import TextField from "@material-ui/core/TextField";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { withStyles } from '@material-ui/core/styles';
 import styles from "../styles/TodoListStyles";
@@ -72,11 +70,6 @@ function TodoList(props) {
             setPublished(oneList.published_at)
         };
     };
-
-    // const dynamicSearch = () => {
-    //     setSearchTerm(searchTerm);
-    //     return allList.filter(name => name.toLowerCase().incluces(searchTerm).toLowerCase())
-    // };
 
     return (
         <Grid container justifyContent="center" alignItems="center">

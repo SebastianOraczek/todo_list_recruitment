@@ -33,7 +33,7 @@ const styles = {
     button: {
         backgroundColor: "#faa307",
         color: "white",
-        margin: "1.5rem 0",
+        margin: "2rem 0",
         width: "7.5rem",
         "&:hover": {
             backgroundColor: "#fab640",

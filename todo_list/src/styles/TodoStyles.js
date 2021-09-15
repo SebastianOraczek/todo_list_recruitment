@@ -6,7 +6,7 @@ const styles = {
         margin: "1rem",
         backgroundColor: "#2b2c2c",
         borderRadius: "8px",
-        transition: "all 0.2s ease-is-out",
+        transition: "all 0.3s ease-in-out",
         "&:hover": {
             backgroundColor: "#333533"
         }
@@ -15,8 +15,7 @@ const styles = {
         height: "64px",
     },
     name: {
-        marginRight: "2rem",
-        width: "2rem",
+        width: "7rem",
         fontFamily: "Ubuntu",
         fontWeight: 300,
         display: "flex",
@@ -31,7 +30,7 @@ const styles = {
     complete: {
         fontFamily: "Ubuntu",
         color: "rgba(255, 255, 255, 0.7)",
-        marginLeft: "1rem",
+        marginLeft: "3rem",
         display: "flex",
         justifyContent: "end",
     }

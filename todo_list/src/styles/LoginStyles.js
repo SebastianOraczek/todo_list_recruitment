@@ -9,7 +9,7 @@ const styles = {
         fontSize: "30px",
         fontWeight: "700",
         letterSpacing: "1px",
-        margin: "1.3rem 0 4rem 0",
+        margin: "2rem 0 4rem 0",
         display: "flex",
         justifyContent: "center"
     },
@@ -43,14 +43,14 @@ const styles = {
         display: "flex",
         justifyContent: "center",
         fontSize: "15px",
-        marginBottom: "2rem"
+        marginBottom: "1.6rem"
     },
     linkBox: {
         display: "flex",
         justifyContent: "center",
     },
     link: {
-        marginBottom: "3.5rem",
+        marginBottom: "4rem",
         textDecoration: "none",
         color: "#faa307",
         fontSize: "17px",
